@@ -2,6 +2,9 @@ import React from "react";
 import Griddle from 'griddle-react';
 import styles from "./style.css";
 import helpers from '../../utils/helpers';
+import CaseModal from '../../common/components/CaseModal';
+import {Nav, NavDropdown,Navbar, NavItem, MenuItem} from 'react-bootstrap';
+
 
 var HomePage = React.createClass ({
 
@@ -17,87 +20,47 @@ var HomePage = React.createClass ({
         this.setState({cases: allCases});
         // console.log(allCases);
     }.bind(this))
+    console.log(this.refs);
   },
 
+  openGovRecModal: function () {
+    this.refs.govRecCaseModal.open();
+  },
 
   render() {
     return (
       <div className={styles.content}>
+        <Navbar>
+          <Navbar.Header>
+            <Navbar.Brand>
+              <a href="#">CCMS</a>
+            </Navbar.Brand>
+            <Navbar.Toggle />
+          </Navbar.Header>
+          <Navbar.Collapse>
+            <Nav>
+              <NavItem eventKey={1} active={true} href="#">Dashboard</NavItem>
+              <NavDropdown eventKey={3} title="Add Case" id="basic-nav-dropdown">
+                <MenuItem eventKey={3.1} onClick={this.openGovRecModal}>Government Reclamation</MenuItem>
+                <MenuItem eventKey={3.2}>Type 2</MenuItem>
+                <MenuItem eventKey={3.3}>Type 3</MenuItem>
+                <MenuItem divider />
+                <MenuItem eventKey={3.3}>Special</MenuItem>
+              </NavDropdown>
+            </Nav>
+            <Nav pullRight>
+              <NavItem eventKey={1} href="#">Log out</NavItem>
+            </Nav>
+          </Navbar.Collapse>
+        </Navbar>
 
-
-
-
-
-
-        <nav className="navbar navbar-default">
-          <div className="container-fluid">
-            <div className="navbar-header">
-              <button type="button" className="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
-                <span className="sr-only">Toggle navigation</span>
-                <span className="icon-bar"></span>
-                <span className="icon-bar"></span>
-                <span className="icon-bar"></span>
-              </button>
-              <a className="navbar-brand" href="#">CCMS</a>
-            </div>
-
-
-            <div className="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-              <ul className="nav navbar-nav">
-                <li className="active"><a href="#">My Dashboard <span className="sr-only">(current)</span></a></li>
-                <li className="dropdown">
-                  <a href="#" className="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Dropdown <span className="caret"></span></a>
-                  <ul className="dropdown-menu">
-                    <li><a href="#">Action</a></li>
-                    <li><a href="#">Another action</a></li>
-                    <li><a href="#">Something else here</a></li>
-                    <li role="separator" className="divider"></li>
-                    <li><a href="#">Separated link</a></li>
-                    <li role="separator" className="divider"></li>
-                    <li><a href="#">One more separated link</a></li>
-                  </ul>
-                </li>
-              </ul>
-              <form className="navbar-form navbar-left" role="search">
-                <div className="form-group">
-                  <input type="text" className="form-control" placeholder="Search"></input>
-                </div>
-                <button type="submit" className="btn btn-default">Submit</button>
-              </form>
-              <ul className="nav navbar-nav navbar-right">
-                <li><a href="#">Link</a></li>
-                <li className="dropdown">
-                  <a href="#" className="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Dropdown <span className="caret"></span></a>
-                  <ul className="dropdown-menu">
-                    <li><a href="#">Action</a></li>
-                    <li><a href="#">Another action</a></li>
-                    <li><a href="#">Something else here</a></li>
-                    <li role="separator" className="divider"></li>
-                    <li><a href="#">Separated link</a></li>
-                  </ul>
-                </li>
-              </ul>
-            </div>
-          </div>
-        </nav>
-
-
-
-
-
-
-
-
-
-
-
-
-
-        <h1>Cases for {this.state.userInfo.firstName} {this.state.userInfo.LastName}</h1>
+        <br/>
+        <h1 onClick={this.openGovRecModal}>Cases for {this.state.userInfo.firstName} {this.state.userInfo.LastName}</h1>
+        <br/>
         <Griddle results={this.state.cases} tableClassName="table" showFilter={true}
           showSettings={true} columns={["id", "dateCreated", "currentStatus", "mainType", 'subType']}
           noDataMessage={"No Cases to Display. Try Refreshing the page or click Add New above."}/>
-
+        <CaseModal ref={'govRecCaseModal'} />
       </div>
     );
   }
