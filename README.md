@@ -1,7 +1,7 @@
 ##ccms
 ## Getting Started
 
-If you do not have Node and npm installed make sure you start here https://nodejs and here https://www.npmjs.com/
+If you do not have Node and npm installed make sure you start here https://nodejs.org and here https://www.npmjs.com/
 
 ```sh
 $ git clone https://github.com/ChrisWphoto/react-ccms.git
