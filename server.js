@@ -1,6 +1,6 @@
 import express from 'express';
 const app = express();
-
+// postinstall node_module is what heroku calls after install
 
 /************************************************************
  *
@@ -10,7 +10,7 @@ const app = express();
  *   - index.html
  *
  ************************************************************/
-
+process.env.PRODUCTION
 // Serve application file depending on environment
 app.get('/app.js', (req, res) => {
   if (process.env.PRODUCTION) {

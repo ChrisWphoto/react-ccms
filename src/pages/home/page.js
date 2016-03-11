@@ -55,10 +55,10 @@ var HomePage = React.createClass ({
         </Navbar>
 
         <br/>
-        <h1 onClick={this.openGovRecModal}>Cases for {this.state.userInfo.firstName} {this.state.userInfo.LastName}</h1>
+        <h1 >Cases for {this.state.userInfo.firstName} {this.state.userInfo.LastName}</h1>
         <br/>
         <Griddle results={this.state.cases} tableClassName="table" showFilter={true}
-          showSettings={true} columns={["id", "dateCreated", "currentStatus", "mainType", 'subType']}
+          showSettings={true} columns={["WatchItem", "benName", "totalAmount", "SLA", 'Number of Days Open', 'Status']}
           noDataMessage={"No Cases to Display. Try Refreshing the page or click Add New above."}/>
         <CaseModal ref={'govRecCaseModal'} />
       </div>
