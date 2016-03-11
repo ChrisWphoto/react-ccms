@@ -1,4 +1,5 @@
-import express from 'express';
+var express = require('express');
+// import express from 'express';
 const app = express();
 // postinstall node_module is what heroku calls after install
 
