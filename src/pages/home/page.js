@@ -25,7 +25,7 @@ var HomePage = React.createClass ({
         this.setState({cases: allCases});
         // console.log(allCases);
     }.bind(this))
-    console.log(this.refs);
+    console.log('logging refs for homePageComponent',this.refs);
   },
 
   logOut: function(){
@@ -83,7 +83,7 @@ var HomePage = React.createClass ({
           noDataMessage={"No Cases to Display. Try Refreshing the page or click Add New above."}
           onRowClick={this.rowClick}
         />
-      
+
 
         <CaseModal ref={'govRecCaseModal'} />
 

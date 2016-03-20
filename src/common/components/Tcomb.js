@@ -5,15 +5,34 @@ import DatePicker from 'react-bootstrap-date-picker';
 import axios from 'axios';
 const Form = t.form.Form;
 
+//dates here need to be transformed into SQL
+//format is Wed Mar 02 2016 12:00:00 GMT-0600
 
+//defining enum for per
+const govRecSubType = t.enums({
+  govrec: 'Government Reclamation',
+  crf: 'CRF',
+  dcn: 'DCN',
+  dne: 'DNE'
+
+});
 
 // define your domain model with tcomb
 // https://github.com/gcanti/tcomb
-const Person = t.struct({
+const GovRecCaseCreationForm = t.struct({
+  selectCaseSubtype: govRecSubType,
   beneficiaryName: t.String,
   beneficiarySSN: t.Number,
-  verifiedDated: t.Date // a date field
-
+  beneficiaryAccountNumber: t.Number,
+  beneficiaryCustomerID: t.Number,
+  dateOfDeath: t.Date,
+  dateLearnedOfDeath: t.Date,
+  otherGovernmentBenefits: t.Boolean,
+  ifYesAboveAddComment: t.String,
+  paymentAmount: t.Number,
+  paymentDate: t.Date,
+  sumOfPayments: t.Number,
+  claimNumber: t.Number
 });
 
 const Tform = React.createClass({
@@ -23,25 +42,11 @@ const Tform = React.createClass({
     var value = this.refs.form.getValue();
 
     // if validation fails, value will be null
-    if (value) {
-      // value here is an instance of Person
+    if (value){
       console.log(value);
-      console.log(value.BeneficiarySSN);
-      axios.post('https://ccmsrestapi.herokuapp.com/createcase', {
-        benName: value.beneficiaryName,
-        benSocialNumber: value.BeneficiarySSN,
-        id: 1
-      })
-      .then(function (response) {
-        console.log('success');
-        console.log(response);
-      })
-      .catch(function (response) {
-        console.log('Failure Promise resolved...');
-        console.log(response);
-      });
+      console.log(value.dateOfDeath);
     }
-    else console.log("no value", value);
+    else console.log("Form is invalid or an error occured: form value is", value);
   },
 
   render() {
@@ -49,7 +54,7 @@ const Tform = React.createClass({
       <div>
         <Form
           ref="form"
-          type={Person}
+          type={GovRecCaseCreationForm}
         />
       <button onClick={this.save2}>Save</button>
       </div>
@@ -62,7 +67,8 @@ const Tform = React.createClass({
 
 const dateTransformer = {
   format: (value) => t.Date.is(value) ? value.toISOString() : value,
-  parse: (str) => str ? new Date(str) : null
+  parse: (str) => str ? new Date(str).toISOString() : null
+  //parse: (str) => str ? new Date(str) : null
 };
 
 const renderDate = (locals) => {

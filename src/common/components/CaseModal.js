@@ -26,12 +26,12 @@ const CaseModal = React.createClass({
 
         <Modal show={this.state.showModal} onHide={this.close}>
           <Modal.Header closeButton>
-            <Modal.Title>Government Reclamation</Modal.Title>
+            <Modal.Title>Case Creation For: Government Reclamation</Modal.Title>
           </Modal.Header>
           <Modal.Body>
 
 
-            <h4>Popover in a Marmot!!!</h4>
+            <h4>Fill in the details below</h4>
             <p>there is a <OverlayTrigger overlay={popover}><a href="#">popover</a></OverlayTrigger> here</p>
 
             <hr />
