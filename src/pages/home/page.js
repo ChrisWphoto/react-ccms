@@ -2,8 +2,13 @@ import React from "react";
 import Griddle from 'griddle-react';
 import styles from "./style.css";
 import helpers from '../../utils/helpers';
+import { browserHistory } from 'react-router';
 import CaseModal from '../../common/components/CaseModal';
+import Tform from '../../common/components/Tcomb';
 import {Nav, NavDropdown,Navbar, NavItem, MenuItem} from 'react-bootstrap';
+
+
+
 
 
 var HomePage = React.createClass ({
@@ -23,8 +28,19 @@ var HomePage = React.createClass ({
     console.log(this.refs);
   },
 
+  logOut: function(){
+    console.log('logging out');
+    window.localStorage.removeItem('user');
+    console.log('logging out');
+    browserHistory.push('/');
+  },
+
   openGovRecModal: function () {
     this.refs.govRecCaseModal.open();
+  },
+
+  rowClick: function (e) {
+    console.log('props', e.props);
   },
 
   render() {
@@ -49,7 +65,7 @@ var HomePage = React.createClass ({
               </NavDropdown>
             </Nav>
             <Nav pullRight>
-              <NavItem eventKey={1} href="#">Log out</NavItem>
+              <NavItem eventKey={1} onClick={this.logOut}>Log out</NavItem>
             </Nav>
           </Navbar.Collapse>
         </Navbar>
@@ -57,10 +73,20 @@ var HomePage = React.createClass ({
         <br/>
         <h1 >Cases for {this.state.userInfo.firstName} {this.state.userInfo.LastName}</h1>
         <br/>
-        <Griddle results={this.state.cases} tableClassName="table" showFilter={true}
-          showSettings={true} columns={["WatchItem", "benName", "totalAmount", "SLA", 'Number of Days Open', 'Status']}
-          noDataMessage={"No Cases to Display. Try Refreshing the page or click Add New above."}/>
+
+
+        <Griddle
+          results={this.state.cases}
+          tableClassName="table" showFilter={true}
+          showSettings={true}
+          columns={["id", "benName", "totalAmount", "SLA", 'Number of Days Open', 'Status']}
+          noDataMessage={"No Cases to Display. Try Refreshing the page or click Add New above."}
+          onRowClick={this.rowClick}
+        />
+      
+
         <CaseModal ref={'govRecCaseModal'} />
+
       </div>
     );
   }

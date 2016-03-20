@@ -1,8 +1,10 @@
 import axios from 'axios';
 
+var startTime;
 
 function getCases(){
-  console.log('inside of cases');
+  startTime = Date.now();
+  console.log('inside of cases', startTime);
   return axios.get('http://ccmsrestapi.herokuapp.com/findallcases');
 };
 
@@ -11,6 +13,7 @@ function getCases(){
 var helpers = {
   getDashboardInfo: function(){
     return getCases().then(function(cases){
+      console.log('Time delta',Date.now()-startTime);
       console.log('in helpers', cases);
       return cases.data;
     })

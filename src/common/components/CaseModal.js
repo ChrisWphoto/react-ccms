@@ -1,5 +1,6 @@
 import React from "react";
 import {Modal, Popover, Tooltip, Button, OverlayTrigger} from 'react-bootstrap';
+import Tform from "./Tcomb.js";
 
 const CaseModal = React.createClass({
 
@@ -30,28 +31,11 @@ const CaseModal = React.createClass({
           <Modal.Body>
 
 
-            <h4>Popover in a modal</h4>
+            <h4>Popover in a Marmot!!!</h4>
             <p>there is a <OverlayTrigger overlay={popover}><a href="#">popover</a></OverlayTrigger> here</p>
 
             <hr />
-
-            <form className="form-signin">
-               <h2 className="form-signin-heading">Please login</h2>
-
-               <input type="text" className="form-control" name="firstName"
-                 placeholder="First Name" required="true" autofocus="" />
-               <input type="text" className="form-control" name="LastName"
-                 placeholder="Last Name" required="true"/>
-
-             <br/>
-               <h2> Select User Type </h2>
-               <div className="btn-group" style={{margin: '25px auto'}} role="group" aria-label="...">
-                  <button type="button" name="caseMngr" className="btn btn-default"> <span className="glyphicon glyphicon-briefcase" aria-hidden="true"></span> Case Manager</button>
-                  <button type="button" name='admin' className="btn btn-default"><span className="glyphicon glyphicon-globe" aria-hidden="true"></span> Admin</button>
-               </div>
-               <br/><br/>
-               <button  >Login</button>
-             </form>
+            <Tform />
 
           </Modal.Body>
           <Modal.Footer>

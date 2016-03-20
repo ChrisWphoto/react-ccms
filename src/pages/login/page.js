@@ -19,7 +19,7 @@ var LoginPage = React.createClass( {
       <div className={styles.content}>
         <h1 className={styles.heading}>CCMS </h1>
 
-        //This is loading the Login in component which is imported above
+        
         <Login />
 
         <p className={styles.lead}>Don't have an account? </p>

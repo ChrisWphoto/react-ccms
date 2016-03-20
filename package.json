@@ -4,7 +4,6 @@
   "description": "A minimal skeleton for building testable React apps using Babel",
   "main": "src/main.js",
   "scripts": {
-    
     "server": "node start.js",
     "build": "webpack -p --progress --config webpack.production.config.js",
     "test": "nyc ava --fail-fast --verbose --require babel-register",
@@ -21,12 +20,12 @@
     "react",
     "quickstart"
   ],
-  "author": "Mark Fayngersh",
+  "author": "UMKC cs451 teamTU",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/pheuter/essential-react/issues"
+    "url": "chriswalter.me"
   },
-  "homepage": "https://github.com/pheuter/essential-react",
+  "homepage": "chriswalter.me",
   "devDependencies": {
     "autoprefixer": "^6.0.2",
     "ava": "^0.12.0",
@@ -58,10 +57,12 @@
     "express": "^4.12.3",
     "griddle-react": "^0.3.1",
     "react": "^0.14.7",
+    "tcomb-form": "0.9.0",
     "react-bootstrap": "^0.28.3",
+    "react-bootstrap-date-picker": "^1.1.0",
     "react-dom": "^0.14.7",
-    "webpack": "^1.12.14",
-    "react-router": "^2.0.0"
+    "react-router": "^2.0.0",
+    "webpack": "^1.12.14"
   },
   "engine": "node >= 5.0.0"
 }

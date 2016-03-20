@@ -11,7 +11,7 @@ const app = express();
  *   - index.html
  *
  ************************************************************/
-process.env.PRODUCTION
+
 // Serve application file depending on environment
 app.get('/app.js', (req, res) => {
   if (process.env.PRODUCTION) {
