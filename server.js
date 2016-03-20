@@ -1,8 +1,9 @@
 var express = require('express');
+var cors = require('cors');
 // import express from 'express';
 const app = express();
 // postinstall node_module is what heroku calls after install
-
+app.use(cors());
 /************************************************************
  *
  * Express routes for:
