@@ -27,7 +27,7 @@ const Tform = React.createClass({
       // value here is an instance of Person
       console.log(value);
       console.log(value.BeneficiarySSN);
-      axios.post('http://ccmsrestapi.herokuapp.com/createcase', {
+      axios.post('https://ccmsrestapi.herokuapp.com/createcase', {
         benName: value.beneficiaryName,
         benSocialNumber: value.BeneficiarySSN,
         id: 1
