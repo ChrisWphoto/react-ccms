@@ -5,7 +5,9 @@ var startTime;
 function getCases(){
   startTime = Date.now();
   console.log('inside of cases', startTime);
-  return axios.get('https://ccmsrestapi.herokuapp.com/findallcases');
+  let findCases = "https://ccmsrestapi.herokuapp.com/findallcases"
+  console.log(findCases);
+  return axios.get(findCases);
 };
 
 
