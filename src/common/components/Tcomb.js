@@ -3,6 +3,7 @@ import { render } from 'react-dom';
 import t from 'tcomb-form';
 import DatePicker from 'react-bootstrap-date-picker';
 import axios from 'axios';
+
 const Form = t.form.Form;
 
 //dates here need to be transformed into SQL
@@ -44,7 +45,7 @@ const Tform = React.createClass({
     // if validation fails, value will be null
     if (value){
       console.log(value);
-      console.log(value.dateOfDeath);
+      console.log(value.dateOfDeath.toUTCString());
     }
     else console.log("Form is invalid or an error occured: form value is", value);
   },
@@ -67,8 +68,7 @@ const Tform = React.createClass({
 
 const dateTransformer = {
   format: (value) => t.Date.is(value) ? value.toISOString() : value,
-  parse: (str) => str ? new Date(str).toISOString() : null
-  //parse: (str) => str ? new Date(str) : null
+  parse: (str) => str ? new Date(str) : null
 };
 
 const renderDate = (locals) => {
