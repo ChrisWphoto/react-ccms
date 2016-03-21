@@ -1,6 +1,6 @@
 import React from "react";
 import {Modal, Popover, Tooltip, Button, OverlayTrigger} from 'react-bootstrap';
-import Tform from "./Tcomb.js";
+import GovRecType1Form from "./GovRecType1Form";
 
 const CaseModal = React.createClass({
 
@@ -35,7 +35,7 @@ const CaseModal = React.createClass({
             <p>there is a <OverlayTrigger overlay={popover}><a href="#">popover</a></OverlayTrigger> here</p>
 
             <hr />
-            <Tform />
+            <GovRecType1Form />
 
           </Modal.Body>
           <Modal.Footer>

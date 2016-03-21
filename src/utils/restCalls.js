@@ -14,11 +14,11 @@ function getCases(){
 
 //extend this function later with axios.all([/*array of http function calls*/])
 // TODO: Add .catch() to these to deal with errors
-var helpers = {
+var restCalls = {
   getDashboardInfo: function(){
     return getCases().then(function(cases){
       console.log('Time delta',Date.now()-startTime);
-      console.log('in helpers', cases);
+      console.log('in restCalls', cases);
       return cases.data;
     })
   },
@@ -33,4 +33,4 @@ var helpers = {
 
 }
 
-module.exports = helpers;
+module.exports = restCalls;

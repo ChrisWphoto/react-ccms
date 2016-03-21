@@ -2,12 +2,9 @@ import React from 'react';
 import { render } from 'react-dom';
 import t from 'tcomb-form';
 import DatePicker from 'react-bootstrap-date-picker';
-import axios from 'axios';
+
 
 const Form = t.form.Form;
-
-//dates here need to be transformed into SQL
-//format is Wed Mar 02 2016 12:00:00 GMT-0600
 
 //defining enum for per
 const govRecSubType = t.enums({
@@ -65,7 +62,8 @@ const Tform = React.createClass({
 });
 
 
-
+//This is the code that makes the date picker work with tcomb
+//a date object is returned that
 const dateTransformer = {
   format: (value) => t.Date.is(value) ? value.toISOString() : value,
   parse: (str) => str ? new Date(str) : null

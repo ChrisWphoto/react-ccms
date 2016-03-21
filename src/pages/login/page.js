@@ -19,7 +19,7 @@ var LoginPage = React.createClass( {
       <div className={styles.content}>
         <h1 className={styles.heading}>CCMS </h1>
 
-        
+        {/* Login is the login commponet declared above*/}
         <Login />
 
         <p className={styles.lead}>Don't have an account? </p>

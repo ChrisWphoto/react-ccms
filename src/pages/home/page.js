@@ -1,13 +1,10 @@
 import React from "react";
 import Griddle from 'griddle-react';
 import styles from "./style.css";
-import helpers from '../../utils/helpers';
+import restCalls from '../../utils/restCalls';
 import { browserHistory } from 'react-router';
 import CaseModal from '../../common/components/CaseModal';
-import Tform from '../../common/components/Tcomb';
 import {Nav, NavDropdown,Navbar, NavItem, MenuItem} from 'react-bootstrap';
-
-
 
 
 
@@ -20,10 +17,9 @@ var HomePage = React.createClass ({
   },
 
   componentDidMount: function() {
-    helpers.getDashboardInfo()
+    restCalls.getDashboardInfo()
       .then(function(allCases){
         this.setState({cases: allCases});
-        // console.log(allCases);
     }.bind(this))
     console.log('logging refs for homePageComponent',this.refs);
   },
