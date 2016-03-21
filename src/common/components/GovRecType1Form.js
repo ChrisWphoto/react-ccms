@@ -62,8 +62,14 @@ const Tform = React.createClass({
 });
 
 
-//This is the code that makes the date picker work with tcomb
-//a date object is returned that
+/*
+
+  This is the code that makes the date picker work with tcomb
+  a date object is returned that
+  note that you also need to import DatePicker from 'react-bootstrap-date-picker'
+   above
+
+*/
 const dateTransformer = {
   format: (value) => t.Date.is(value) ? value.toISOString() : value,
   parse: (str) => str ? new Date(str) : null
