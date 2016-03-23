@@ -2,17 +2,17 @@ import React from 'react';
 import { render } from 'react-dom';
 import t from 'tcomb-form';
 import DatePicker from 'react-bootstrap-date-picker';
+import restCalls from '../../utils/restCalls';
 
 
 const Form = t.form.Form;
 
-//defining enum for per
+//defining enum for person form
 const govRecSubType = t.enums({
   govrec: 'Government Reclamation',
   crf: 'CRF',
   dcn: 'DCN',
   dne: 'DNE'
-
 });
 
 // define your domain model with tcomb
@@ -20,20 +20,37 @@ const govRecSubType = t.enums({
 const GovRecCaseCreationForm = t.struct({
   selectCaseSubtype: govRecSubType,
   beneficiaryName: t.String,
-  beneficiarySSN: t.Number,
-  beneficiaryAccountNumber: t.Number,
-  beneficiaryCustomerID: t.Number,
+  // beneficiarySSN: t.Number,
+  // beneficiaryAccountNumber: t.Number,
+  // beneficiaryCustomerID: t.Number,
   dateOfDeath: t.Date,
-  dateLearnedOfDeath: t.Date,
-  otherGovernmentBenefits: t.Boolean,
-  ifYesAboveAddComment: t.String,
-  paymentAmount: t.Number,
-  paymentDate: t.Date,
+  // dateLearnedOfDeath: t.Date,
+  // otherGovernmentBenefits: t.Boolean,
+  // ifYesAboveAddComment: t.String,
+  // paymentAmount: t.Number,
+  // paymentDate: t.Date,
   sumOfPayments: t.Number,
-  claimNumber: t.Number
+  // claimNumber: t.Number
 });
 
-const Tform = React.createClass({
+var Tform = React.createClass({
+
+  logMarmots(){
+    console.log("MARMOTAAAAAAA MOTHER FUCKERS@@@@@@@@");
+  },
+  parseCaseOj(form){
+    return {
+      userId: 1,
+      caseEntity: {
+        dateCreated: form.dateOfDeath.toISOString(),
+        mainType: "Government Reclamation",
+        subType: form.selectCaseSubtype,
+        benName: form.beneficiaryName,
+        totalAmount: form.sumOfPayments
+      }
+    };
+
+  },
 
   save2() {
     // call getValue() to get the values of the form
@@ -42,7 +59,11 @@ const Tform = React.createClass({
     // if validation fails, value will be null
     if (value){
       console.log(value);
-      console.log(value.dateOfDeath.toUTCString());
+      console.log( this.parseCaseOj(value) );
+
+      restCalls.creatCase(this.parseCaseOj(value));
+
+
     }
     else console.log("Form is invalid or an error occured: form value is", value);
   },

@@ -4,6 +4,7 @@ import styles from "./style.css";
 import restCalls from '../../utils/restCalls';
 import { browserHistory } from 'react-router';
 import CaseModal from '../../common/components/CaseModal';
+import ViewCaseModal from '../../common/components/ViewCaseModal';
 import {Nav, NavDropdown,Navbar, NavItem, MenuItem} from 'react-bootstrap';
 
 
@@ -12,7 +13,8 @@ var HomePage = React.createClass ({
 
   getInitialState: function(){
      return {
-       userInfo: JSON.parse(window.localStorage.getItem('user'))
+       userInfo: JSON.parse(window.localStorage.getItem('user')),
+       currentCaseData: "No Case Selected"
      }
   },
 
@@ -21,7 +23,7 @@ var HomePage = React.createClass ({
       .then(function(allCases){
         this.setState({cases: allCases});
     }.bind(this))
-    console.log('logging refs for homePageComponent',this.refs);
+
   },
 
   logOut: function(){
@@ -33,10 +35,23 @@ var HomePage = React.createClass ({
 
   openGovRecModal: function () {
     this.refs.govRecCaseModal.open();
+    setTimeout(function(){
+        console.log('logging refs for homePageComponent', this.refs.govRecCaseModal.refs.tm.logMarmots());
+    }.bind(this), 150);
+
+  },
+  //wrapping caseData attributes in H3 html element
+  parseCaseData(theCase){
+    return Object.keys(theCase).map( (theKey, idx) => <h3 key={idx} > {theCase[theKey]} </h3>);
+
   },
 
   rowClick: function (e) {
-    console.log('props', e.props);
+    console.log('props', e.props.data.benName);
+    this.setState({currentCaseData: this.parseCaseData(e.props.data)});
+    this.refs.viewCaseModal.open();
+
+    console.log('logging refs afteropeing', this.refs.govRecCaseModal.refs.tm);
   },
 
   render() {
@@ -67,7 +82,7 @@ var HomePage = React.createClass ({
         </Navbar>
 
         <br/>
-        <h1 >Cases for {this.state.userInfo.firstName} {this.state.userInfo.LastName}</h1>
+        <h1 > Cases for {this.state.userInfo.firstName} {this.state.userInfo.LastName}</h1>
         <br/>
 
 
@@ -81,7 +96,10 @@ var HomePage = React.createClass ({
         />
 
 
-        <CaseModal ref={'govRecCaseModal'} />
+        {/* This is the modal that is rendered when a row is click
+        currentCaseData is passed a property which the modal can render*/}
+      <ViewCaseModal case={this.state.currentCaseData} ref={'viewCaseModal'} />
+      <CaseModal case={this.state.currentCaseData} ref={'govRecCaseModal'} />
 
       </div>
     );

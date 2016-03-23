@@ -1,8 +1,7 @@
 import React from "react";
 import {Modal, Popover, Tooltip, Button, OverlayTrigger} from 'react-bootstrap';
-import GovRecType1Form from "./GovRecType1Form";
 
-var CaseModal = React.createClass({
+var ViewCaseModal = React.createClass({
 
   getInitialState() {
     return { showModal: false };
@@ -13,29 +12,28 @@ var CaseModal = React.createClass({
     this.setState({ showModal: false });
   },
 
+
+
   open() {
     console.log('Opening Modal');
     this.setState({ showModal: true });
   },
 
+
+
   render() {
-    let popover = <Popover title="Enter SSN Carefully">We Provide Tips on what to enter</Popover>;
+    // var theCase = this.props.case;
 
     return (
       <div>
 
-        <Modal show={this.state.showModal} ref={'hello'} onHide={this.close}>
+        <Modal show={this.state.showModal} onHide={this.close}>
           <Modal.Header closeButton>
-            <Modal.Title>Case Creation For: Government Reclamation</Modal.Title>
+            <Modal.Title>Viewing case for:</Modal.Title>
           </Modal.Header>
           <Modal.Body>
+          {this.props.case}
 
-
-            <h4>Fill in the details below {this.props.case.benName}</h4>
-            <p>there is a <OverlayTrigger overlay={popover}><a href="#">popover</a></OverlayTrigger> here</p>
-
-            <hr />
-            <GovRecType1Form ref={'tm'} />
 
           </Modal.Body>
           <Modal.Footer>
@@ -47,4 +45,4 @@ var CaseModal = React.createClass({
   }
 });
 
-module.exports = CaseModal;
+module.exports = ViewCaseModal;
