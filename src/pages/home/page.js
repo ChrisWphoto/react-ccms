@@ -27,31 +27,24 @@ var HomePage = React.createClass ({
   },
 
   logOut: function(){
-    console.log('logging out');
     window.localStorage.removeItem('user');
-    console.log('logging out');
     browserHistory.push('/');
   },
 
   openGovRecModal: function () {
     this.refs.govRecCaseModal.open();
-    setTimeout(function(){
-        console.log('logging refs for homePageComponent', this.refs.govRecCaseModal.refs.tm.logMarmots());
-    }.bind(this), 150);
-
   },
+
   //wrapping caseData attributes in H3 html element
   parseCaseData(theCase){
     return Object.keys(theCase).map( (theKey, idx) => <h3 key={idx} > {theCase[theKey]} </h3>);
-
   },
 
+// open modal to view all case details
   rowClick: function (e) {
-    console.log('props', e.props.data.benName);
+    // setState is how the case is updated in the viewCaseModal
     this.setState({currentCaseData: this.parseCaseData(e.props.data)});
     this.refs.viewCaseModal.open();
-
-    console.log('logging refs afteropeing', this.refs.govRecCaseModal.refs.tm);
   },
 
   render() {
