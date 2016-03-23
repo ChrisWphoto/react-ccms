@@ -36,6 +36,7 @@ var HomePage = React.createClass ({
   },
 
   //wrapping caseData attributes in H3 html element
+  //TODO should move this to an onShow() function in Modal
   parseCaseData(theCase){
     return Object.keys(theCase).map( (theKey, idx) => <h3 key={idx} > {theCase[theKey]} </h3>);
   },
@@ -68,7 +69,7 @@ var HomePage = React.createClass ({
                 <MenuItem eventKey={3.3}>Special</MenuItem>
               </NavDropdown>
             </Nav>
-            <Nav pullRight>
+            <Nav >
               <NavItem eventKey={1} onClick={this.logOut}>Log out</NavItem>
             </Nav>
           </Navbar.Collapse>
