@@ -7,7 +7,51 @@ import CaseModal from '../../common/components/CaseModal';
 import ViewCaseModal from '../../common/components/ViewCaseModal';
 import {Nav, NavDropdown,Navbar, NavItem, MenuItem} from 'react-bootstrap';
 
+var meta = [
+  {
+    "columnName": "id",
+    "order": 1,
+    "locked": false,
+    "visible": true,
+    "displayName": "Case ID"
+  },
+  {
+    "columnName": "benName",
+    "order": 2,
+    "locked": false,
+    "visible": true,
+    "displayName": "Beneficiary Name"
+  },
+  {
+    "columnName": "totalAmount",
+    "order": 3,
+    "locked": false,
+    "visible": true,
+    "displayName": "Total Amount"
+  },
+  {
+    "columnName": "SLA",
+    "order": 4,
+    "locked": false,
+    "visible": true,
+    "displayName": "SLA"
+  },
+  {
+    "columnName": "Number of Days Open",
+    "order": 5,
+    "locked": false,
+    "visible": true,
+    "displayName": "Days Open"
+  },
+  {
+    "columnName": "Status",
+    "order": 6,
+    "locked": false,
+    "visible": true,
+    "displayName": "Status"
+  }
 
+];
 
 var HomePage = React.createClass ({
 
@@ -79,7 +123,6 @@ var HomePage = React.createClass ({
         <h1 > Cases for {this.state.userInfo.firstName} {this.state.userInfo.LastName}</h1>
         <br/>
 
-
         <Griddle
           results={this.state.cases}
           tableClassName="table" showFilter={true}
@@ -87,6 +130,9 @@ var HomePage = React.createClass ({
           columns={["id", "benName", "totalAmount", "SLA", 'Number of Days Open', 'Status']}
           noDataMessage={"No Cases to Display. Try Refreshing the page or click Add New above."}
           onRowClick={this.rowClick}
+          reultsPerPage={15}
+          filterPlaceholderText={"Search"}
+          columnMetadata={meta}
         />
 
 
