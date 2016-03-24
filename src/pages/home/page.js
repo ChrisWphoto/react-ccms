@@ -44,7 +44,7 @@ var meta = [
     "displayName": "Days Open"
   },
   {
-    "columnName": "status",
+    "columnName": "Status",
     "order": 6,
     "locked": false,
     "visible": true,
@@ -127,7 +127,7 @@ var HomePage = React.createClass ({
           results={this.state.cases}
           tableClassName="table" showFilter={true}
           showSettings={true}
-          columns={["id", "benName", "totalAmount", "SLA", 'Number of Days Open', 'status']}
+          columns={["id", "benName", "totalAmount", "SLA", 'Number of Days Open', 'Status']}
           noDataMessage={"No Cases to Display. Try Refreshing the page or click Add New above."}
           onRowClick={this.rowClick}
           reultsPerPage={15}
