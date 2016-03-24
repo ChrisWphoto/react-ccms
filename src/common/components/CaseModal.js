@@ -24,12 +24,12 @@ var CaseModal = React.createClass({
     return (
       <div >
 
-        <Modal show={this.state.showModal} ref={'hello'} onHide={this.close}>
+        <Modal show={this.state.showModal} onHide={this.close}>
           <Modal.Header closeButton>
-            <Modal.Title><b>Case Creation For: Government Reclamation</b></Modal.Title>
+            <Modal.Title>Case Creation: <b>Government Reclamation</b> </Modal.Title>
           </Modal.Header>
           <Modal.Body >
-            
+
             <GovRecType1Form />
 
           </Modal.Body>

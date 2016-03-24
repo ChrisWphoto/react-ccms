@@ -77,8 +77,7 @@ var HomePage = React.createClass ({
               <NavItem eventKey={1} active={true} href="#">Dashboard</NavItem>
               <NavDropdown eventKey={3} title="Add Case" id="basic-nav-dropdown">
                 <MenuItem eventKey={3.1} onClick={this.openGovRecModal}>Government Reclamation</MenuItem>
-                <MenuItem eventKey={3.2}>Type 2</MenuItem>
-                <MenuItem eventKey={3.3}>Type 3</MenuItem>
+                <MenuItem eventKey={3.2}>Treasury Form</MenuItem>
                 <MenuItem divider />
                 <MenuItem eventKey={3.3}>Special</MenuItem>
               </NavDropdown>
