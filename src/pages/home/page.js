@@ -16,13 +16,27 @@ var HomePage = React.createClass ({
      }
   },
 
-  componentDidMount: function() {
+  calcDayDelta: function(theCase){
+    let oneDay = 24*60*60*1000; // hours*minutes*seconds*milliseconds
+    let dateCaseOpened = new Date(theCase.dateCreated);
+    let numDaysOpened = Math.round(Math.abs((Date.now() - dateCaseOpened.getTime())/(oneDay)));
+    theCase.dateOpened = numDaysOpened;
+    return theCase;
+  },
+
+  refreshCases: function(){
     restCalls.getDashboardInfo()
       .then(function(allCases){
-        //for each case obj in all cases add DisplayName:
+        //for each case obj in all cases calc how long it has been open
+        var mutatedCases = allCases.map( theCase => this.calcDayDelta(theCase) );
         this.setState({cases: allCases});
-    }.bind(this))
 
+    }.bind(this))
+  },
+
+
+  componentDidMount: function() {
+    this.refreshCases();
   },
 
   logOut: function(){
@@ -67,6 +81,7 @@ var HomePage = React.createClass ({
                 <MenuItem divider />
                 <MenuItem eventKey={3.3}>Special</MenuItem>
               </NavDropdown>
+              <NavItem eventKey={4} onClick={this.refreshCases}>Refresh Cases</NavItem>
             </Nav>
             <Nav >
               <NavItem eventKey={1} onClick={this.logOut}>Log out</NavItem>
@@ -78,14 +93,16 @@ var HomePage = React.createClass ({
         <h1 > Cases for {this.state.userInfo.firstName} {this.state.userInfo.LastName}</h1>
         <br/>
 
-
         <Griddle
           results={this.state.cases}
           tableClassName="table" showFilter={true}
           showSettings={true}
-          columns={["id", "benName", "totalAmount", "SLA", 'Number of Days Open', 'Status']}
+          columns={["id", "benName", "totalAmount", "SLA", 'dateOpened', 'currentStatus']}
           noDataMessage={"No Cases to Display. Try Refreshing the page or click Add New above."}
           onRowClick={this.rowClick}
+          reultsPerPage={10}
+          filterPlaceholderText={"Search"}
+          columnMetadata={meta}
         />
 
 
@@ -98,5 +115,55 @@ var HomePage = React.createClass ({
     );
   }
 })
+
+
+var meta = [
+  {
+    "columnName": "id",
+    "order": 1,
+    "locked": false,
+    "visible": true,
+    "displayName": "Case ID"
+  },
+  {
+    "columnName": "benName",
+    "order": 2,
+    "locked": false,
+    "visible": true,
+    "displayName": "Beneficiary Name"
+  },
+  {
+    "columnName": "totalAmount",
+    "order": 3,
+    "locked": false,
+    "visible": true,
+    "displayName": "Total Amount"
+  },
+  {
+    "columnName": "SLA",
+    "order": 4,
+    "locked": false,
+    "visible": true,
+    "displayName": "SLA"
+  },
+  {
+    "columnName": "dateOpened",
+    "order": 5,
+    "locked": false,
+    "visible": true,
+    "displayName": "Days Open"
+  },
+  {
+    "columnName": "Status",
+    "order": 6,
+    "locked": false,
+    "visible": true,
+    "displayName": "Status"
+  }
+
+];
+
+
+
 
 module.exports = HomePage;

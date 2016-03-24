@@ -14,33 +14,44 @@ const govRecSubType = t.enums({
   dne: 'DNE'
 });
 
+const payment = t.struct({
+  amount: t.Number,
+  date: t.Date
+});
+
+
 // define your domain model with tcomb
 // https://github.com/gcanti/tcomb
 const GovRecCaseCreationForm = t.struct({
   selectCaseSubtype: govRecSubType,
   beneficiaryName: t.String,
-  // beneficiarySSN: t.Number,
-  // beneficiaryAccountNumber: t.Number,
-  // beneficiaryCustomerID: t.Number,
+  beneficiarySSN: t.Number,
+  beneficiaryAccountNumber: t.maybe(t.Number),
+  beneficiaryCustomerID: t.maybe(t.Number),
   dateOfDeath: t.Date,
-  // dateLearnedOfDeath: t.Date,
-  // otherGovernmentBenefits: t.Boolean,
-  // ifYesAboveAddComment: t.String,
-  // paymentAmount: t.Number,
-  // paymentDate: t.Date,
-  sumOfPayments: t.Number,
-  // claimNumber: t.Number
+  dateLearnedOfDeath: t.maybe(t.Date),
+  otherGovernmentBenefits: t.maybe(t.String),
+  payments: t.list(payment),
+  claimNumber: t.maybe(t.Number)
 });
 
-var Tform = React.createClass({
-  componentDidMount: function() {
-    console.log(templates);
-  },
 
-  logMarmots(){
-    console.log(templates);
-  },
+var Tform = React.createClass({
+
+  //this is where the data captured in the form is prepared for the backend
   parseCaseOj(form){
+
+    //prepare payments
+    let payments = [];
+    var sumPayments = 0;
+    form.payments.forEach( pay => {
+      sumPayments += pay.amount;
+      payments.push({
+        date: pay.date.toISOString(),
+        amount: pay.amount
+      });
+    });
+
     return {
       userId: 1,
       caseEntity: {
@@ -48,9 +59,11 @@ var Tform = React.createClass({
         mainType: "Government Reclamation",
         subType: form.selectCaseSubtype,
         benName: form.beneficiaryName,
-        totalAmount: form.sumOfPayments
-      }
-    };
+        totalAmount: sumPayments,
+        currentStatus: "Open"
+      },
+      paymentsToAdd: payments
+    }
 
   },
 
@@ -62,7 +75,6 @@ var Tform = React.createClass({
     if (value){
       console.log(value);
       console.log( this.parseCaseOj(value) );
-
       restCalls.creatCase(this.parseCaseOj(value));
 
 

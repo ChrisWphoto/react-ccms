@@ -32,12 +32,16 @@ var ViewCaseModal = React.createClass({
             <Modal.Title>Viewing case for:</Modal.Title>
           </Modal.Header>
           <Modal.Body>
+            <Button >Edit</Button>
+            <Button >Close</Button>
+            <Button >Watch</Button>
+            <hr/>
           {this.props.case}
 
 
           </Modal.Body>
           <Modal.Footer>
-            <Button onClick={this.close}>Close</Button>
+            <Button onClick={this.close}>Close Modal</Button>
           </Modal.Footer>
         </Modal>
       </div>

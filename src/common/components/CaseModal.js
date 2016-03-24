@@ -22,20 +22,15 @@ var CaseModal = React.createClass({
     let popover = <Popover title="Enter SSN Carefully">We Provide Tips on what to enter</Popover>;
 
     return (
-      <div>
+      <div >
 
         <Modal show={this.state.showModal} ref={'hello'} onHide={this.close}>
           <Modal.Header closeButton>
-            <Modal.Title>Case Creation For: Government Reclamation</Modal.Title>
+            <Modal.Title><b>Case Creation For: Government Reclamation</b></Modal.Title>
           </Modal.Header>
-          <Modal.Body>
-
-
-            <h4>Fill in the details below {this.props.case.benName}</h4>
-            <p>there is a <OverlayTrigger overlay={popover}><a href="#">popover</a></OverlayTrigger> here</p>
-
-            <hr />
-            <GovRecType1Form ref={'tm'} />
+          <Modal.Body >
+            
+            <GovRecType1Form />
 
           </Modal.Body>
           <Modal.Footer>
