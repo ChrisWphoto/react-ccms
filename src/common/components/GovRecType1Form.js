@@ -4,7 +4,6 @@ import t from 'tcomb-form';
 import DatePicker from 'react-bootstrap-date-picker';
 import restCalls from '../../utils/restCalls';
 
-
 const Form = t.form.Form;
 
 //defining enum for person form
@@ -34,9 +33,12 @@ const GovRecCaseCreationForm = t.struct({
 });
 
 var Tform = React.createClass({
+  componentDidMount: function() {
+    console.log(templates);
+  },
 
   logMarmots(){
-    console.log("MARMOTAAAAAAA MOTHER FUCKERS@@@@@@@@");
+    console.log(templates);
   },
   parseCaseOj(form){
     return {

@@ -7,8 +7,6 @@ import CaseModal from '../../common/components/CaseModal';
 import ViewCaseModal from '../../common/components/ViewCaseModal';
 import {Nav, NavDropdown,Navbar, NavItem, MenuItem} from 'react-bootstrap';
 
-
-
 var HomePage = React.createClass ({
 
   getInitialState: function(){
@@ -21,6 +19,7 @@ var HomePage = React.createClass ({
   componentDidMount: function() {
     restCalls.getDashboardInfo()
       .then(function(allCases){
+        //for each case obj in all cases add DisplayName:
         this.setState({cases: allCases});
     }.bind(this))
 
