@@ -57,7 +57,8 @@ var HomePage = React.createClass ({
 // open modal to view all case details
   rowClick: function (e) {
     // setState is how the case is updated in the viewCaseModal
-    this.setState({currentCaseData: this.parseCaseData(e.props.data)});
+    // this.setState({currentCaseData: this.parseCaseData(e.props.data)});
+    this.setState({caseData: e.props.data});
     this.refs.viewCaseModal.open();
   },
 
@@ -108,7 +109,7 @@ var HomePage = React.createClass ({
 
         {/* This is the modal that is rendered when a row is click
         currentCaseData is passed a property which the modal can render*/}
-      <ViewCaseModal case={this.state.currentCaseData} ref={'viewCaseModal'} />
+      <ViewCaseModal  case={this.state.caseData} ref={'viewCaseModal'} />
       <CaseModal case={this.state.currentCaseData} ref={'govRecCaseModal'} />
 
       </div>

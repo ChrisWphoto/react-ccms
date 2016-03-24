@@ -4,7 +4,7 @@ import {Modal, Popover, Tooltip, Button, OverlayTrigger} from 'react-bootstrap';
 var ViewCaseModal = React.createClass({
 
   getInitialState() {
-    return { showModal: false };
+    return { showModal: false, theCase: 'hello' };
   },
 
 
@@ -12,7 +12,10 @@ var ViewCaseModal = React.createClass({
     this.setState({ showModal: false });
   },
 
-
+  onShow() {
+    this.setState({marmot: "leanna"})
+    console.log('Marmot');
+  },
 
   open() {
     console.log('Opening Modal');
@@ -22,21 +25,43 @@ var ViewCaseModal = React.createClass({
 
 
   render() {
-    // var theCase = this.props.case;
-
+    var theCase = this.props.case ? this.props.case : "Not Loaded Yet";
+    var noRecoveryMsg = "Not Completed";
     return (
       <div>
 
         <Modal show={this.state.showModal} onHide={this.close}>
           <Modal.Header closeButton>
-            <Modal.Title>Viewing case for:</Modal.Title>
+
+            <Modal.Title>
+             <b>{theCase.mainType}</b> For: <b>{theCase.benName}</b>
+             <br/>
+             Case:  <b>{theCase.currentStatus}</b>
+
+             <br/><br/>
+             <Button style={{marginLeft: '68%'}} >Edit</Button>
+             {theCase.currentStatus != "closed" ? <Button>Close</Button> : <Button>Open</Button> }
+             <Button >Watch</Button>
+            </Modal.Title>
+
           </Modal.Header>
           <Modal.Body>
-            <Button >Edit</Button>
-            <Button >Close</Button>
-            <Button >Watch</Button>
+
+
+            <h2>Recovery Details</h2>
+            <h4>Amount Paid: ${theCase.totalAmount}</h4>
+            <h4>Full Recovery: {theCase.fullRecovery ? theCase.fullRecovery : noRecoveryMsg}</h4>
+            <h4>Completed Date: {theCase.benAccountNumber}</h4>
+            <h4>Verified by: Chris Walter on Date 3/15/2016</h4>
+
             <hr/>
-          {this.props.case}
+            <h2>Case Details</h2>
+            <h4>Assigned to: {theCase.assigned}</h4>
+            <h4>Case ID: {theCase.id}</h4>
+            <h4>Account Number: {theCase.benAccountNumber}</h4>
+            <h4>SSN: {theCase.benSocialNumber}</h4>
+            <h4>Account Number: {theCase.benAccountNumber}</h4>
+
 
 
           </Modal.Body>
