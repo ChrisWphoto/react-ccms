@@ -67,6 +67,10 @@ var Tform = React.createClass({
 
   },
 
+  closeStuff() {
+    console.log(this.props);
+  },
+
   save2() {
     // call getValue() to get the values of the form
     var value = this.refs.form.getValue();
@@ -75,7 +79,7 @@ var Tform = React.createClass({
     if (value){
       console.log(value);
       console.log( this.parseCaseOj(value) );
-      restCalls.creatCase(this.parseCaseOj(value));
+      restCalls.creatCase(this.parseCaseOj(value)).then((val) => this.props.closeModal())
 
 
     }
@@ -90,6 +94,7 @@ var Tform = React.createClass({
           type={GovRecCaseCreationForm}
         />
       <button onClick={this.save2}>Save</button>
+      <button onClick={this.props.closeModal}>Save</button>
       </div>
     );
   }

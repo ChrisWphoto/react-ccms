@@ -25,7 +25,7 @@ var restCalls = {
 
   creatCase: function(caseJSON){
     let creatCaseURI = 'https://ccmsrestapi.herokuapp.com/createcase';
-    axios.post( creatCaseURI, caseJSON ).then(caseResponse => {
+    return axios.post( creatCaseURI, caseJSON ).then(caseResponse => {
       console.log(caseResponse);
     })
   }

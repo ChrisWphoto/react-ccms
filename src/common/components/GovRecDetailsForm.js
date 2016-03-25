@@ -82,10 +82,11 @@ var GovRecDetailsform = React.createClass({
           type={GovRecDetailsform}
         />
       <button onClick={this.save2}>Save</button>
+      
       </div>
     );
   }
-  
+
 });
 
 

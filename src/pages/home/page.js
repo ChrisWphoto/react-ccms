@@ -5,7 +5,7 @@ import restCalls from '../../utils/restCalls';
 import { browserHistory } from 'react-router';
 import CaseModal from '../../common/components/CaseModal';
 import ViewCaseModal from '../../common/components/ViewCaseModal';
-import {Nav, NavDropdown,Navbar, NavItem, MenuItem} from 'react-bootstrap';
+import {Nav, NavDropdown,Navbar, NavItem, MenuItem, Button} from 'react-bootstrap';
 
 var HomePage = React.createClass ({
 
@@ -21,10 +21,12 @@ var HomePage = React.createClass ({
     let dateCaseOpened = new Date(theCase.dateCreated);
     let numDaysOpened = Math.round(Math.abs((Date.now() - dateCaseOpened.getTime())/(oneDay)));
     theCase.dateOpened = numDaysOpened;
+    theCase.SLA = Math.floor(Math.random() * (9 - 2) + 2) + " Days";
     return theCase;
   },
 
   refreshCases: function(){
+    this.setState({ cases: {} })
     restCalls.getDashboardInfo()
       .then(function(allCases){
         //for each case obj in all cases calc how long it has been open
@@ -33,7 +35,6 @@ var HomePage = React.createClass ({
 
     }.bind(this))
   },
-
 
   componentDidMount: function() {
     this.refreshCases();
@@ -92,7 +93,6 @@ var HomePage = React.createClass ({
         <br/>
         <h1 > Cases for {this.state.userInfo.firstName} {this.state.userInfo.LastName}</h1>
         <br/>
-
         <Griddle
           results={this.state.cases}
           tableClassName="table" showFilter={true}
@@ -104,6 +104,7 @@ var HomePage = React.createClass ({
           filterPlaceholderText={"Search"}
           columnMetadata={meta}
         />
+      <Button>Show All Available Cases</Button>
 
 
         {/* This is the modal that is rendered when a row is click

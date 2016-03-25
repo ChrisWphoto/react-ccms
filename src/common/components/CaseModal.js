@@ -30,7 +30,7 @@ var CaseModal = React.createClass({
           </Modal.Header>
           <Modal.Body >
 
-            <GovRecType1Form />
+            <GovRecType1Form closeModal={this.close} />
 
           </Modal.Body>
           <Modal.Footer>
