@@ -3,6 +3,7 @@ import { render } from 'react-dom';
 import t from 'tcomb-form';
 import DatePicker from 'react-bootstrap-date-picker';
 import restCalls from '../../utils/restCalls';
+import {Button} from 'react-bootstrap';
 
 const Form = t.form.Form;
 
@@ -93,8 +94,8 @@ var Tform = React.createClass({
           ref="form"
           type={GovRecCaseCreationForm}
         />
-      <button onClick={this.save2}>Save</button>
-      <button onClick={this.props.closeModal}>Save</button>
+      <Button onClick={this.save2}>Save Case</Button>
+
       </div>
     );
   }
