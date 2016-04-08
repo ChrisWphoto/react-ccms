@@ -35,7 +35,7 @@ var NachaDrop = React.createClass({
       console.log('Received files: ', files);
       this.setState({
         files: files,
-        filePreview: files.map( file => <h4 id={file.name}>Uploading:{file.name}</h4> )
+        filePreview: files.map( file => <h4 key={file.name}>Uploading:{file.name}</h4> )
       });
 
     },
