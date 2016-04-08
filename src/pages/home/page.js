@@ -5,6 +5,7 @@ import restCalls from '../../utils/restCalls';
 import { browserHistory } from 'react-router';
 import CaseModal from '../../common/components/CaseModal';
 import ViewCaseModal from '../../common/components/ViewCaseModal';
+import NachaDrop from '../../common/components/NachaDrop';
 import {Nav, NavDropdown,Navbar, NavItem, MenuItem, Button} from 'react-bootstrap';
 
 var HomePage = React.createClass ({
@@ -90,6 +91,7 @@ var HomePage = React.createClass ({
           </Navbar.Collapse>
         </Navbar>
 
+        <NachaDrop className={styles.dropbox} />
         <br/>
         <h1 > Cases for {this.state.userInfo.firstName} {this.state.userInfo.LastName}</h1>
         <br/>
@@ -105,6 +107,7 @@ var HomePage = React.createClass ({
           columnMetadata={meta}
         />
       <Button>Show All Available Cases</Button>
+
 
 
         {/* This is the modal that is rendered when a row is click
