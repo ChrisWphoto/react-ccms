@@ -100,7 +100,8 @@ var HomePage = React.createClass ({
           columns={["id", "benName", "totalAmount", "SLA", 'dateOpened', 'currentStatus']}
           noDataMessage={"No Cases to Display. Try Refreshing the page or click Add New above."}
           onRowClick={this.rowClick}
-          reultsPerPage={10}
+          enableInfiniteScroll={true}
+          bodyHeight={500}
           filterPlaceholderText={"Search"}
           columnMetadata={meta}
         />
@@ -155,13 +156,223 @@ var meta = [
     "displayName": "Days Open"
   },
   {
-    "columnName": "Status",
+    "columnName": "currentStatus",
     "order": 6,
     "locked": false,
     "visible": true,
     "displayName": "Status"
-  }
+  },
+  {
+    "columnName": "dateCreated",
+    "order": 1,
+    "locked": false,
+    "visible": true,
+    "displayName": "Date Created"
+  },
+  {
+    "columnName": "assigned",
+    "order": 1,
+    "locked": false,
+    "visible": true,
+    "displayName": "Assigned"
+  },
+  {
+    "columnName": "dateVerified",
+    "order": 1,
+    "locked": false,
+    "visible": true,
+    "displayName": "Date Verified"
+  },
+  {
+    "columnName": "userIdClosed",
+    "order": 1,
+    "locked": false,
+    "visible": false,
+    "displayName": "User Id Closed"
+  },
+  {
+    "columnName": "watchItem",
+    "order": 1,
+    "locked": false,
+    "visible": true,
+    "displayName": "Watch"
+  },
+  {
+    "columnName": "checkNumber",
+    "order": 1,
+    "locked": false,
+    "visible": false,
+    "displayName": "Check Number"
+  },
+  {
+    "columnName": "locked",
+    "order": 1,
+    "locked": false,
+    "visible": false,
+    "displayName": "locked"
+  },
+  {
+    "columnName": "benAccountNumber",
+    "order": 1,
+    "locked": false,
+    "visible": true,
+    "displayName": "Account Number"
+  },
+  {
+    "columnName": "otherBenefitsComments",
+    "order": 1,
+    "locked": false,
+    "visible": false,
+    "displayName": "Benefits Comments"
+  },
+  {
+    "columnName": "mailedTo",
+    "order": 1,
+    "locked": false,
+    "visible": false,
+    "displayName": "Mailed to"
+  },
+  {
+    "columnName": "userIdVerified",
+    "order": 1,
+    "locked": false,
+    "visible": false,
+    "displayName": "User Id Verified"
+  },
+  {
+    "columnName": "reviewDeadline",
+    "order": 1,
+    "locked": false,
+    "visible": true,
+    "displayName": "Review Deadline"
+  },
+  {
+    "columnName": "userIdAssigned",
+    "order": 1,
+    "locked": false,
+    "visible": false,
+    "displayName": "User Id Assigned"
+  },
+  {
+    "columnName": "benSocialNumber",
+    "order": 1,
+    "locked": false,
+    "visible": true,
+    "displayName": "SSN"
+  },
+  {
+    "columnName": "numberPayments",
+    "order": 1,
+    "locked": false,
+    "visible": false,
+    "displayName": "Number of Payments"
+  },
+  {
+    "columnName": "fullRecovery",
+    "order": 1,
+    "locked": false,
+    "visible": false,
+    "displayName": "Full Recovery"
+  },
+  {
+    "columnName": "glCostCenter",
+    "order": 1,
+    "locked": false,
+    "visible": false,
+    "displayName": "Cost Center"
 
+  },
+  {
+    "columnName": "userIdOpened",
+    "order": 1,
+    "locked": false,
+    "visible": false,
+    "displayName": "User ID Opened"
+  },
+  {
+    "columnName": "mainType",
+    "order": 1,
+    "locked": false,
+    "visible": true,
+    "displayName": "Case Type"
+  },
+  {
+    "columnName": "benCustomerId",
+    "order": 1,
+    "locked": false,
+    "visible": true,
+    "displayName": "Beneficiary ID"
+  },
+  {
+    "columnName": "claimNumber",
+    "order": 1,
+    "locked": false,
+    "visible": true,
+    "displayName": "Claim Number"
+  },
+  {
+    "columnName": "completedDate",
+    "order": 1,
+    "locked": false,
+    "visible": true,
+    "displayName": "Date Completed"
+  },
+  {
+    "columnName": "ddaAccountNumber",
+    "order": 1,
+    "locked": false,
+    "visible": false,
+    "displayName": "DDA Account Number"
+  },
+  {
+    "columnName": "dateClosed",
+    "order": 1,
+    "locked": false,
+    "visible": false,
+    "displayName": "Date Closed"
+  },
+  {
+    "columnName": "subType",
+    "order": 1,
+    "locked": false,
+    "visible": true,
+    "displayName": "Sub Type"
+  },
+  {
+    "columnName": "dateOfDeath",
+    "order": 1,
+    "locked": false,
+    "visible": false,
+    "displayName": "Date of Death"
+  },
+  {
+    "columnName": "recoveryMethod",
+    "order": 1,
+    "locked": false,
+    "visible": true,
+    "displayName": "Recovery Method"
+  },
+  {
+    "columnName": "additionalNotes",
+    "order": 1,
+    "locked": false,
+    "visible": false,
+    "displayName": "Additional Notes"
+  },
+  {
+    "columnName": "otherRecoveryComments",
+    "order": 1,
+    "locked": false,
+    "visible": false,
+    "displayName": "Recovery Comments"
+  },
+  {
+    "columnName": "otherGovBenefits",
+    "order": 1,
+    "locked": false,
+    "visible": false,
+    "displayName": "Other Gov Benefits"
+  },
 ];
 
 
