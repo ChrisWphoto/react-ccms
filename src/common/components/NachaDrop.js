@@ -2,7 +2,6 @@ var React = require('react');
 var Dropzone = require('react-dropzone');
 import axios from 'axios';
 import rest from '../../utils/restCalls';
-import NachaModal from './NachaModal';
 
 
 
