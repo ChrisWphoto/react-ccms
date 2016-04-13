@@ -5,7 +5,7 @@ var startTime;
 function getCases(){
   startTime = Date.now();
   console.log('inside of cases', startTime);
-  let findCases = "https://ccmsrestapi.herokuapp.com/findallcases"
+  let findCases = "http://testccmsrestapi.herokuapp.com/findallcases"
   console.log(findCases);
   return axios.get( findCases );
 };
@@ -28,9 +28,12 @@ var restCalls = {
     return axios.post( creatCaseURI, caseJSON ).then(caseResponse => {
       console.log(caseResponse);
     })
+  },
+
+  sendNacha: function(file){
+    let uri = 'http://testccmsrestapi.herokuapp.com/importnachafile';
+    return axios.post( uri, file ).then(newCases => newCases);
   }
-
-
 }
 
 module.exports = restCalls;

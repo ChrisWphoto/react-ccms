@@ -19,7 +19,6 @@ var CaseModal = React.createClass({
   },
 
   render() {
-    let popover = <Popover title="Enter SSN Carefully">We Provide Tips on what to enter</Popover>;
 
     return (
       <div >

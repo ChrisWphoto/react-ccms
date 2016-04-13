@@ -6,3 +6,9 @@
   font-size: 20px;
   color: #7F7F7F;
 }
+
+/*style for file drop*/
+.dropbox {
+  font-size: 2em;
+  height: 74px;
+}
