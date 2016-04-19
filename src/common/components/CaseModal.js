@@ -1,5 +1,5 @@
 import React from "react";
-import {Modal, Popover, Tooltip, Button, OverlayTrigger} from 'react-bootstrap';
+import {Modal, Popover, Tooltip, Button, OverlayTrigger,Accordion,Panel} from 'react-bootstrap';
 import GovRecType1Form from "./GovRecType1Form";
 
 var CaseModal = React.createClass({
@@ -23,19 +23,14 @@ var CaseModal = React.createClass({
     return (
       <div >
 
-        <Modal show={this.state.showModal} onHide={this.close}>
-          <Modal.Header closeButton>
-            <Modal.Title>Case Creation: <b>Government Reclamation</b> </Modal.Title>
-          </Modal.Header>
-          <Modal.Body >
-
-            <GovRecType1Form closeModal={this.close} />
-
-          </Modal.Body>
-          <Modal.Footer>
-            <Button onClick={this.close}>Close</Button>
-          </Modal.Footer>
+        <Modal show={this.state.showModal} onHide={this.close}> <Accordion>
+          <Panel header={<Modal.Header closeButton><Modal.Title>Case Creation: <b>Government Reclamation</b> </Modal.Title> </Modal.Header>}eventKey="1">
+            <Modal.Body ><GovRecType1Form closeModal={this.close} /></Modal.Body>
+            <Modal.Footer><Button onClick={this.close}>Close</Button></Modal.Footer>
+          </Panel>
+        </Accordion>
         </Modal>
+
       </div>
     );
   }

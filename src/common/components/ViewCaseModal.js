@@ -1,5 +1,5 @@
 import React from "react";
-import {Modal, Popover, Tooltip, Button, OverlayTrigger} from 'react-bootstrap';
+import {Modal, Popover, Tooltip, Button, OverlayTrigger,Accordion,Panel} from 'react-bootstrap';
 
 var ViewCaseModal = React.createClass({
 
@@ -45,7 +45,7 @@ var ViewCaseModal = React.createClass({
             </Modal.Title>
 
           </Modal.Header>
-          <Modal.Body>
+           <Modal.Body>
 
 
             <h2>Recovery Details</h2>

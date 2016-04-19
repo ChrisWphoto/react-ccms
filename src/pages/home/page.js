@@ -8,7 +8,7 @@ import ViewCaseModal from '../../common/components/ViewCaseModal';
 import TreasuryModal from '../../common/components/TreasuryModal';
 import ViewTreasuryModal from '../../common/components/ViewTreasuryModal';
 import NachaDrop from '../../common/components/NachaDrop';
-import {Nav, NavDropdown,Navbar, NavItem, MenuItem, Button} from 'react-bootstrap';
+import {Nav, NavDropdown,Navbar, NavItem, MenuItem, Button,Accordion,Panel} from 'react-bootstrap';
 
 var HomePage = React.createClass ({
 
