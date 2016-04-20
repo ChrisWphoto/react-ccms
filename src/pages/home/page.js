@@ -5,16 +5,18 @@ import restCalls from '../../utils/restCalls';
 import { browserHistory } from 'react-router';
 import CaseModal from '../../common/components/CaseModal';
 import ViewCaseModal from '../../common/components/ViewCaseModal';
+import TreasuryModal from '../../common/components/TreasuryModal';
+import ViewTreasuryModal from '../../common/components/ViewTreasuryModal';
 import NachaDrop from '../../common/components/NachaDrop';
-import {Nav, NavDropdown,Navbar, NavItem, MenuItem, Button} from 'react-bootstrap';
+import {Nav, NavDropdown,Navbar, NavItem, MenuItem, Button,Accordion,Panel} from 'react-bootstrap';
 
 var HomePage = React.createClass ({
 
   getInitialState: function(){
-     return {
-       userInfo: JSON.parse(window.localStorage.getItem('user')),
-       currentCaseData: "No Case Selected"
-     }
+    return {
+      userInfo: JSON.parse(window.localStorage.getItem('user')),
+      currentCaseData: "No Case Selected"
+    }
   },
 
   calcDayDelta: function(theCase){
@@ -34,7 +36,7 @@ var HomePage = React.createClass ({
         var mutatedCases = allCases.map( theCase => this.calcDayDelta(theCase) );
         this.setState({cases: allCases});
 
-    }.bind(this))
+      }.bind(this))
   },
 
 
@@ -51,6 +53,9 @@ var HomePage = React.createClass ({
   openGovRecModal: function () {
     this.refs.govRecCaseModal.open();
   },
+  openTresModal: function () {
+    this.refs.tresModal.open();
+  },
 
   //wrapping caseData attributes in H3 html element
   //TODO should move this to an onShow() function in Modal
@@ -64,6 +69,7 @@ var HomePage = React.createClass ({
     // this.setState({currentCaseData: this.parseCaseData(e.props.data)});
     this.setState({caseData: e.props.data});
     this.refs.viewCaseModal.open();
+    this.refs.viewTreasuryModal.open();
   },
 
   render() {
@@ -80,9 +86,9 @@ var HomePage = React.createClass ({
             <Nav>
               <NavItem eventKey={1} active={true} href="#">Dashboard</NavItem>
 
-            <NavDropdown eventKey={3} title="Add Case" id="basic-nav-dropdown">
+              <NavDropdown eventKey={3} title="Add Case" id="basic-nav-dropdown">
                 <MenuItem eventKey={3.1} onClick={this.openGovRecModal}>Government Reclamation</MenuItem>
-                <MenuItem eventKey={3.2}>Treasury Form</MenuItem>
+                <MenuItem eventKey={3.2} onClick={this.openTresModal}>Treasury Form</MenuItem>
                 <MenuItem divider />
                 <MenuItem eventKey={3.3}>Special</MenuItem>
               </NavDropdown>
@@ -111,15 +117,16 @@ var HomePage = React.createClass ({
           filterPlaceholderText={"Search"}
           columnMetadata={meta}
         />
-      <Button>Show All Available Cases</Button>
+        <Button>Show All Available Cases</Button>
 
 
 
         {/* This is the modal that is rendered when a row is click
-        currentCaseData is passed a property which the modal can render*/}
-      <ViewCaseModal  case={this.state.caseData} ref={'viewCaseModal'} />
-      <CaseModal case={this.state.currentCaseData} ref={'govRecCaseModal'} />
-
+         currentCaseData is passed a property which the modal can render*/}
+        <ViewCaseModal  case={this.state.caseData} ref={'viewCaseModal'} />
+        <CaseModal case={this.state.currentCaseData} ref={'govRecCaseModal'} />
+        <ViewTreasuryModal  case={this.state.caseData} ref={'viewTreasuryModal'} />
+        <TreasuryModal case={this.state.currentCaseData} ref={'tresModal'} />
       </div>
     );
   }

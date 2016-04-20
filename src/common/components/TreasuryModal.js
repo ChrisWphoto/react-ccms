@@ -1,8 +1,8 @@
 import React from "react";
 import {Modal, Popover, Tooltip, Button, OverlayTrigger,Accordion,Panel} from 'react-bootstrap';
-import GovRecType1Form from "./GovRecType1Form";
+import TreasuryForm from "./TreasuryForm";
 
-var CaseModal = React.createClass({
+var TreasuryModal = React.createClass({
 
   getInitialState() {
     return { showModal: false };
@@ -14,7 +14,7 @@ var CaseModal = React.createClass({
   },
 
   open() {
-    console.log('Opening Modal');
+    console.log('Opening Treasury');
     this.setState({ showModal: true });
   },
 
@@ -24,8 +24,8 @@ var CaseModal = React.createClass({
       <div >
 
         <Modal show={this.state.showModal} onHide={this.close}> <Accordion>
-          <Panel header={<Modal.Header closeButton><Modal.Title>Case Creation: <b>Government Reclamation</b> </Modal.Title> </Modal.Header>}eventKey="1">
-            <Modal.Body ><GovRecType1Form closeModal={this.close} /></Modal.Body>
+          <Panel header={<Modal.Header closeButton><Modal.Title>Case Creation: <b>Treasury Referral</b> </Modal.Title> </Modal.Header>}eventKey="1">
+            <Modal.Body ><TreasuryForm closeModal={this.close} /></Modal.Body>
             <Modal.Footer><Button onClick={this.close}>Close</Button></Modal.Footer>
           </Panel>
         </Accordion>
@@ -36,4 +36,4 @@ var CaseModal = React.createClass({
   }
 });
 
-module.exports = CaseModal;
+module.exports = TreasuryModal;

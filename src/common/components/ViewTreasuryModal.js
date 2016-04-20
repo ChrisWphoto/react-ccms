@@ -1,7 +1,7 @@
 import React from "react";
-import {Modal, Popover, Tooltip, Button, OverlayTrigger,Accordion,Panel} from 'react-bootstrap';
+import {Modal, Popover, Tooltip, Button, OverlayTrigger} from 'react-bootstrap';
 
-var ViewCaseModal = React.createClass({
+var ViewTreasuryModal = React.createClass({
 
   getInitialState() {
     return { showModal: false, theCase: 'hello' };
@@ -13,7 +13,7 @@ var ViewCaseModal = React.createClass({
   },
 
   onShow() {
-    this.setState({marmot: "leanna"})
+    this.setState({marmot: "tookie know"})
     console.log('Marmot');
   },
 
@@ -34,18 +34,18 @@ var ViewCaseModal = React.createClass({
           <Modal.Header closeButton>
 
             <Modal.Title>
-             <b>{theCase.mainType}</b> For: <b>{theCase.benName}</b>
-             <br/>
-             Case:  <b>{theCase.currentStatus}</b>
+              <b>{theCase.mainType}</b> For: <b>{theCase.benName}</b>
+              <br/>
+              Case:  <b>{theCase.currentStatus}</b>
 
-             <br/><br/>
-             <Button style={{marginLeft: '68%'}} >Edit</Button>
-             {theCase.currentStatus != "closed" ? <Button>Close</Button> : <Button>Open</Button> }
-             <Button >Watch</Button>
+              <br/><br/>
+              <Button style={{marginLeft: '68%'}} >Edit</Button>
+              {theCase.currentStatus != "closed" ? <Button>Close</Button> : <Button>Open</Button> }
+              <Button >Watch</Button>
             </Modal.Title>
 
           </Modal.Header>
-           <Modal.Body>
+          <Modal.Body>
 
 
             <h2>Recovery Details</h2>
@@ -77,4 +77,4 @@ var ViewCaseModal = React.createClass({
   }
 });
 
-module.exports = ViewCaseModal;
+module.exports = ViewTreasuryModal;
