@@ -39,8 +39,6 @@ var HomePage = React.createClass ({
       }.bind(this))
   },
 
-
-
   componentDidMount: function() {
     this.refreshCases();
   },
@@ -53,6 +51,7 @@ var HomePage = React.createClass ({
   openGovRecModal: function () {
     this.refs.govRecCaseModal.open();
   },
+
   openTresModal: function () {
     this.refs.tresModal.open();
   },
@@ -64,12 +63,10 @@ var HomePage = React.createClass ({
   },
 
 // open modal to view all case details
-  rowClick: function (e) {
-    // setState is how the case is updated in the viewCaseModal
-    // this.setState({currentCaseData: this.parseCaseData(e.props.data)});
-    this.setState({caseData: e.props.data});
+  rowClick: function (rowCaseData) {
+    //setting state allows us to update data in viewCaseModal
+    this.setState({caseData: rowCaseData.props.data});
     this.refs.viewCaseModal.open();
-    this.refs.viewTreasuryModal.open();
   },
 
   render() {
@@ -122,7 +119,7 @@ var HomePage = React.createClass ({
 
 
         {/* This is the modal that is rendered when a row is click
-         currentCaseData is passed a property which the modal can render*/}
+         currentCaseData is passed as a property which the modal can render*/}
         <ViewCaseModal  case={this.state.caseData} ref={'viewCaseModal'} />
         <CaseModal case={this.state.currentCaseData} ref={'govRecCaseModal'} />
         <ViewTreasuryModal  case={this.state.caseData} ref={'viewTreasuryModal'} />
