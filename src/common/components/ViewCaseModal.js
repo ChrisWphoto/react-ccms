@@ -1,12 +1,14 @@
 import React from "react";
 import {Modal, Popover, Tooltip, Button, OverlayTrigger,Accordion,Panel} from 'react-bootstrap';
+import ViewGovRec from './ViewCase-Govrec';
+import EditGovRec from './GovRecType1Form';
+
 
 var ViewCaseModal = React.createClass({
 
   getInitialState() {
-    return { showModal: false, theCase: 'hello' };
+    return { showModal: false, theCase: 'hello', edit: false };
   },
-
 
   close() {
     this.setState({ showModal: false });
@@ -20,6 +22,10 @@ var ViewCaseModal = React.createClass({
   open() {
     console.log('Opening Modal');
     this.setState({ showModal: true });
+  },
+  
+  toggleEdit(){
+      this.setState({edit: !this.state.edit});
   },
 
 
@@ -39,34 +45,17 @@ var ViewCaseModal = React.createClass({
              Case:  <b>{theCase.currentStatus}</b>
 
              <br/><br/>
-             <Button style={{marginLeft: '68%'}} >Edit</Button>
+             <Button onClick={this.toggleEdit} style={{marginLeft: '68%'}} >Edit</Button>
              {theCase.currentStatus != "closed" ? <Button>Close</Button> : <Button>Open</Button> }
              <Button >Watch</Button>
             </Modal.Title>
 
           </Modal.Header>
            <Modal.Body>
-
-
-            <h2>Recovery Details</h2>
-            <h4>Amount Paid: ${theCase.totalAmount}</h4>
-            <h4>Full Recovery: {theCase.fullRecovery ? theCase.fullRecovery : noRecoveryMsg}</h4>
-            <h4>Completed Date: {theCase.benAccountNumber}</h4>
-            <h4>Verified by: Chris Walter on Date 3/15/2016</h4>
-
-            <hr/>
-            <h2>Case Details</h2>
-            <h4>Assigned to: {theCase.assigned}</h4>
-            <h4>Case ID: {theCase.id}</h4>
-            <h4>Account Number: {theCase.benAccountNumber}</h4>
-            <h4>SSN: {theCase.benSocialNumber}</h4>
-            <h4>Account Number: {theCase.benAccountNumber}</h4>
-
-            <hr/>
-            <h2>Case Audit</h2>
-            <h5><b>Chris</b> updated Amount Paid - 3/15/2016 </h5>
-            <h5><b>Joel</b> updated Assigned To - 3/14/2016 </h5>
-
+           {/*Show ViewGovRec when state is  data */}
+           {this.state.edit ? <EditGovRec /> : <ViewGovRec theCase ={this.props.case} />}
+           
+            
           </Modal.Body>
           <Modal.Footer>
             <Button onClick={this.close}>Close Modal</Button>
