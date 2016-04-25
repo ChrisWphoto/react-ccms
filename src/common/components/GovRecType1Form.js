@@ -20,6 +20,9 @@ const payment = t.struct({
   date: t.Date
 });
 
+var options = {
+  auto: 'placeholders'
+};
 
 // define your domain model with tcomb
 // https://github.com/gcanti/tcomb
@@ -92,6 +95,7 @@ var Tform = React.createClass({
       <div>
         <Form
           ref="form"
+          options={options}
           type={GovRecCaseCreationForm}
         />
       <Button onClick={this.save2}>Save Case</Button>

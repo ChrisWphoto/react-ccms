@@ -98,7 +98,7 @@ var HomePage = React.createClass ({
           </Navbar.Collapse>
         </Navbar>
 
-        <NachaDrop className={styles.dropbox} />
+        <NachaDrop className={styles.dropbox} refreshCases={this.refreshCases} />
         <br/>
         <h1 > Cases for {this.state.userInfo.firstName} {this.state.userInfo.LastName}</h1>
         <br/>

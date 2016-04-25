@@ -29,6 +29,8 @@ var NachaDrop = React.createClass({
         });
         //wait 10.5sec then take down success message
         setTimeout( () => this.setState({nachaSuccess: false}), 10500)
+        //this is a function passed down from page.js and it refreshCases on success
+        this.props.refreshCases();
       });
     },
 

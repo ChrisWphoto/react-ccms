@@ -1,13 +1,20 @@
 import React from "react";
 import {Modal, Popover, Tooltip, Button, OverlayTrigger,Accordion,Panel} from 'react-bootstrap';
-import ViewGovRec from './ViewCase-Govrec';
-import EditGovRec from './GovRecType1Form';
+import GovRecRecovery from './view-case/GovRec-recovery-view';
+import GovRecDetails from './view-case/GovRec-details-view';
+import EditGovRec from './view-case/GovRec-recovery-edit';
+import EditGovRecDetails from './view-case/GovRec-details-edit';
+import Audit from './view-case/Audit';
 
 
 var ViewCaseModal = React.createClass({
 
   getInitialState() {
-    return { showModal: false, theCase: 'hello', edit: false };
+    return { showModal: false,
+         theCase: {}, 
+         edit: false,
+         editGRDetails: false 
+        };
   },
 
   close() {
@@ -25,13 +32,16 @@ var ViewCaseModal = React.createClass({
   },
   
   toggleEdit(){
-      this.setState({edit: !this.state.edit});
+        this.setState({edit: !this.state.edit});
+  },
+  
+  toggleEditGRDetails(){
+        this.setState({editGRDetails: !this.state.editGRDetails});
   },
 
 
-
   render() {
-    var theCase = this.props.case ? this.props.case : "Not Loaded Yet";
+    var theCase = this.props.case || {};
     var noRecoveryMsg = "Not Completed";
     return (
       <div>
@@ -40,22 +50,26 @@ var ViewCaseModal = React.createClass({
           <Modal.Header closeButton>
 
             <Modal.Title>
-             <b>{theCase.mainType}</b> For: <b>{theCase.benName}</b>
-             <br/>
-             Case:  <b>{theCase.currentStatus}</b>
-
-             <br/><br/>
-             <Button onClick={this.toggleEdit} style={{marginLeft: '68%'}} >Edit</Button>
-             {theCase.currentStatus != "closed" ? <Button>Close</Button> : <Button>Open</Button> }
-             <Button >Watch</Button>
+                <div style={{float:'right', marginRight: 30}}>
+                    {theCase.currentStatus != "closed" ? <Button>Close</Button> : <Button>Open</Button> }
+                    <Button >Watch</Button>
+                </div>
+                <b>{theCase.mainType}</b> <br/>For: <b>{theCase.benName}</b>
+                <br/>
+                Case:  <b>{theCase.currentStatus}</b>
+                <br/><br/>
             </Modal.Title>
 
           </Modal.Header>
            <Modal.Body>
-           {/*Show ViewGovRec when state is  data */}
-           {this.state.edit ? <EditGovRec /> : <ViewGovRec theCase ={this.props.case} />}
-           
+            {theCase.currentStatus != "closed" ? <Button onClick={this.toggleEdit} style={{float: 'right'}} >Edit</Button> : null }
+                {/*Show ViewGovRec when edit is false */}
+            {this.state.edit ? <EditGovRec theCase={this.props.case} /> : <GovRecRecovery theCase={this.props.case} />}
             
+            <hr/>
+            {theCase.currentStatus != "closed" ? <Button onClick={this.toggleEditGRDetails} style={{float: 'right'}} >Edit</Button> : null }
+            {this.state.editGRDetails ? <EditGovRecDetails theCase={this.props.case} /> : <GovRecDetails theCase={this.props.case} />}
+
           </Modal.Body>
           <Modal.Footer>
             <Button onClick={this.close}>Close Modal</Button>
