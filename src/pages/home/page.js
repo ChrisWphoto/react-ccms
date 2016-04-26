@@ -24,13 +24,15 @@ var HomePage = React.createClass ({
     let dateCaseOpened = new Date(theCase.dateCreated);
     let numDaysOpened = Math.round(Math.abs((Date.now() - dateCaseOpened.getTime())/(oneDay)));
     theCase.dateOpened = numDaysOpened;
-    theCase.SLA = Math.floor(Math.random() * (9 - 2) + 2) + " Days";
     return theCase;
   },
 
   refreshCases: function(){
+    //set cases to empty object
     this.setState({ cases: {} })
+    //request all the cases from DB
     restCalls.getDashboardInfo()
+    //after those cases come back pass to allCases
       .then(function(allCases){
         //for each case obj in all cases calc how long it has been open
         var mutatedCases = allCases.map( theCase => this.calcDayDelta(theCase) );
@@ -132,7 +134,7 @@ var HomePage = React.createClass ({
 
 var meta = [
   {
-    "columnName": "id",
+    "columnName": "caseId",
     "order": 1,
     "locked": false,
     "visible": true,

@@ -32,7 +32,7 @@ const GovRecCaseCreationForm = t.struct({
   beneficiarySSN: t.Number,
   beneficiaryAccountNumber: t.maybe(t.Number),
   beneficiaryCustomerID: t.maybe(t.Number),
-  dateOfDeath: t.Date,
+  dateOfDeath: t.maybe(t.Date),
   dateLearnedOfDeath: t.maybe(t.Date),
   otherGovernmentBenefits: t.maybe(t.String),
   payments: t.list(payment),
@@ -45,11 +45,9 @@ var Tform = React.createClass({
   //this is where the data captured in the form is prepared for the backend
   parseCaseOj(form){
 
-    //prepare payments
+    //Convery Dates for Payments
     let payments = [];
-    var sumPayments = 0;
     form.payments.forEach( pay => {
-      sumPayments += pay.amount;
       payments.push({
         date: pay.date.toISOString(),
         amount: pay.amount
@@ -58,12 +56,11 @@ var Tform = React.createClass({
 
     return {
       userId: 1,
-      caseEntity: {
+      governmentReclamation: {
         dateCreated: form.dateOfDeath.toISOString(),
         mainType: "Government Reclamation",
-        subType: form.selectCaseSubtype,
+        subType: "Gov Reclamation", //form.selectCaseSubtype,
         benName: form.beneficiaryName,
-        totalAmount: sumPayments,
         currentStatus: "Open"
       },
       paymentsToAdd: payments
@@ -83,7 +80,7 @@ var Tform = React.createClass({
     if (value){
       console.log(value);
       console.log( this.parseCaseOj(value) );
-      restCalls.creatCase(this.parseCaseOj(value)).then((val) => this.props.closeModal())
+      restCalls.createCase(this.parseCaseOj(value)).then((val) => this.props.closeModal())
 
 
     }
