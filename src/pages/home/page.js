@@ -27,6 +27,61 @@ var HomePage = React.createClass ({
     return theCase;
   },
 
+  closedCases: function(){
+    //set cases to empty object
+    this.setState({ cases: {} })
+    //request all the cases from DB
+    restCalls.getDashboardInfo()
+        //after those cases come back pass to allCases
+        .then(function(allCases){
+          //for each case obj in all cases calc how long it has been open
+
+          var closedMutatedCases = allCases.filter(function(aCase){
+            return aCase.currentStatus == "closed";
+          });
+
+          this.setState({cases: closedMutatedCases});
+
+        }.bind(this))
+  },
+
+  allCases: function(){
+    //set cases to empty object
+    this.setState({ cases: {} })
+    //request all the cases from DB
+    restCalls.getDashboardInfo()
+        //after those cases come back pass to allCases
+        .then(function(allCases){
+          //for each case obj in all cases calc how long it has been open
+
+          var mutatedCases = allCases.filter(function(aCase){
+            return aCase;
+          });
+
+          this.setState({cases: mutatedCases});
+
+        }.bind(this))
+  },
+
+  myCases: function(){
+    //set cases to empty object
+    this.setState({ cases: {} })
+    //request all the cases from DB
+    restCalls.getDashboardInfo()
+        //after those cases come back pass to allCases
+        .then(function(allCases){
+          //for each case obj in all cases calc how long it has been open
+
+          //allCases = [ {assignedto:1}, {assignedto:2} ]
+          var myCasesMutated = allCases.filter(function(aCase){
+            return aCase.assignedto == "1";
+          });
+          
+          this.setState({cases: myCasesMutated});
+
+        }.bind(this))
+  },
+
   refreshCases: function(){
     //set cases to empty object
     this.setState({ cases: {} })
@@ -93,6 +148,13 @@ var HomePage = React.createClass ({
               </NavDropdown>
 
               <NavItem eventKey={4} onClick={this.refreshCases}>Refresh Cases</NavItem>
+
+              <NavDropdown eventKey={5} title="Case Views" id="basic-nav-dropdown">
+                <MenuItem eventKey={5.1}  onClick={this.allCases} >All Cases</MenuItem>
+                <MenuItem eventKey={5.2}  onClick={this.myCases} >My Cases</MenuItem>
+                <MenuItem eventKey={5.2}  onClick={this.closedCases} >Closed Cases</MenuItem>
+              </NavDropdown>
+
             </Nav>
             <Nav >
               <NavItem eventKey={1} onClick={this.logOut}>Log out</NavItem>
