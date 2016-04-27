@@ -23,7 +23,7 @@ var HomePage = React.createClass ({
     let oneDay = 24*60*60*1000; // hours*minutes*seconds*milliseconds
     let dateCaseOpened = new Date(theCase.dateCreated);
     let numDaysOpened = Math.round(Math.abs((Date.now() - dateCaseOpened.getTime())/(oneDay)));
-    theCase.dateOpened = numDaysOpened;
+    theCase.daysOpen = numDaysOpened;
     return theCase;
   },
 
@@ -36,11 +36,11 @@ var HomePage = React.createClass ({
         .then(function(allCases){
           //for each case obj in all cases calc how long it has been open
 
-          var closedMutatedCases = allCases.filter(function(aCase){
+          var closedCases = allCases.filter(function(aCase){
             return aCase.currentStatus == "closed";
           });
-
-          this.setState({cases: closedMutatedCases});
+          closedCases.map( theCase => this.calcDayDelta(theCase) );
+          this.setState({cases: closedCases});
 
         }.bind(this))
   },
@@ -50,17 +50,13 @@ var HomePage = React.createClass ({
     this.setState({ cases: {} })
     //request all the cases from DB
     restCalls.getDashboardInfo()
-        //after those cases come back pass to allCases
-        .then(function(allCases){
-          //for each case obj in all cases calc how long it has been open
+      //after those cases come back pass to allCases
+      .then(function(allCases){
+        //for each case obj in all cases calc how long it has been open
 
-          var mutatedCases = allCases.filter(function(aCase){
-            return aCase;
-          });
-
-          this.setState({cases: mutatedCases});
-
-        }.bind(this))
+        allCases.map( theCase => this.calcDayDelta(theCase) );
+        this.setState({cases: allCases});
+      }.bind(this))
   },
 
   myCases: function(){
@@ -76,28 +72,16 @@ var HomePage = React.createClass ({
           var myCasesMutated = allCases.filter(function(aCase){
             return aCase.assignedto == "1";
           });
-          
+          if (myCasesMutated.length > 0)
+            myCasesMutated.map( theCase => this.calcDayDelta(theCase) );
+
           this.setState({cases: myCasesMutated});
 
         }.bind(this))
   },
 
-  refreshCases: function(){
-    //set cases to empty object
-    this.setState({ cases: {} })
-    //request all the cases from DB
-    restCalls.getDashboardInfo()
-    //after those cases come back pass to allCases
-      .then(function(allCases){
-        //for each case obj in all cases calc how long it has been open
-        var mutatedCases = allCases.map( theCase => this.calcDayDelta(theCase) );
-        this.setState({cases: allCases});
-
-      }.bind(this))
-  },
-
   componentDidMount: function() {
-    this.refreshCases();
+    this.allCases();
   },
 
   logOut: function(){
@@ -129,6 +113,7 @@ var HomePage = React.createClass ({
   render() {
     return (
       <div className={styles.content}>
+
         <Navbar>
           <Navbar.Header>
             <Navbar.Brand>
@@ -139,61 +124,50 @@ var HomePage = React.createClass ({
           <Navbar.Collapse>
             <Nav>
               <NavItem eventKey={1} active={true} href="#">Dashboard</NavItem>
-
               <NavDropdown eventKey={3} title="Add Case" id="basic-nav-dropdown">
                 <MenuItem eventKey={3.1} onClick={this.openGovRecModal}>Government Reclamation</MenuItem>
                 <MenuItem eventKey={3.2} onClick={this.openTresModal}>Treasury Form</MenuItem>
-                <MenuItem divider />
-                <MenuItem eventKey={3.3}>Special</MenuItem>
               </NavDropdown>
-
-              <NavItem eventKey={4} onClick={this.refreshCases}>Refresh Cases</NavItem>
-
               <NavDropdown eventKey={5} title="Case Views" id="basic-nav-dropdown">
                 <MenuItem eventKey={5.1}  onClick={this.allCases} >All Cases</MenuItem>
                 <MenuItem eventKey={5.2}  onClick={this.myCases} >My Cases</MenuItem>
                 <MenuItem eventKey={5.2}  onClick={this.closedCases} >Closed Cases</MenuItem>
               </NavDropdown>
-
-            </Nav>
-            <Nav >
               <NavItem eventKey={1} onClick={this.logOut}>Log out</NavItem>
             </Nav>
           </Navbar.Collapse>
         </Navbar>
 
-        <NachaDrop className={styles.dropbox} refreshCases={this.refreshCases} />
+        <NachaDrop className={styles.dropbox} refreshCases={this.allCases} />
         <br/>
         <h1 > Cases for {this.state.userInfo.firstName} {this.state.userInfo.LastName}</h1>
         <br/>
-        <Griddle
+
+      <Griddle
           results={this.state.cases}
           tableClassName="table" showFilter={true}
           showSettings={true}
-          columns={["caseId","benName", "totalAmount", "sla", 'dateOpened', 'currentStatus']}
+          columns={["caseId","benName", "totalAmount", "sla", 'daysOpen', 'currentStatus']}
           noDataMessage={"No Cases to Display. Try Refreshing the page or click Add New above."}
           onRowClick={this.rowClick}
           enableInfiniteScroll={true}
           bodyHeight={500}
           filterPlaceholderText={"Search"}
           columnMetadata={meta}
-          initialSort={"dateOpened"}
+          initialSort={"dateCreated"}
+          initialSortAscending={false}
         />
-        <Button>Show All Available Cases</Button>
-
-
 
         {/* This is the modal that is rendered when a row is click
          currentCaseData is passed as a property which the modal can render*/}
         <ViewCaseModal  case={this.state.caseData} ref={'viewCaseModal'} />
-        <AddNewCaseModal refreshCases={this.refreshCases} ref={'govRecCaseModal'} />
+        <AddNewCaseModal refreshCases={this.allCases} ref={'govRecCaseModal'} />
         <ViewTreasuryModal  case={this.state.caseData} ref={'viewTreasuryModal'} />
-        <TreasuryModal case={this.state.currentCaseData} ref={'tresModal'} />
+        <TreasuryModal refreshCases={this.allCases} ref={'tresModal'} />
       </div>
     );
   }
 })
-
 
 var meta = [
   {
@@ -232,11 +206,18 @@ var meta = [
     "displayName": "SLA"
   },
   {
-    "columnName": "dateOpened",
+    "columnName": "daysOpen",
     "order": 5,
     "locked": false,
     "visible": true,
     "displayName": "Days Open"
+  },
+  {
+    "columnName": "dateCreated",
+    "order": 5,
+    "locked": false,
+    "visible": false,
+    "displayName": "Date Created"
   },
   {
     "columnName": "currentStatus",
