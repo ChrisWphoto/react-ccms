@@ -3,7 +3,7 @@ import Griddle from 'griddle-react';
 import styles from "./style.css";
 import restCalls from '../../utils/restCalls';
 import { browserHistory } from 'react-router';
-import CaseModal from '../../common/components/CaseModal';
+import AddNewCaseModal from '../../common/components/CaseModal';
 import ViewCaseModal from '../../common/components/ViewCaseModal';
 import TreasuryModal from '../../common/components/TreasuryModal';
 import ViewTreasuryModal from '../../common/components/ViewTreasuryModal';
@@ -108,13 +108,14 @@ var HomePage = React.createClass ({
           results={this.state.cases}
           tableClassName="table" showFilter={true}
           showSettings={true}
-          columns={["id", "benName", "totalAmount", "SLA", 'dateOpened', 'currentStatus']}
+          columns={["caseId","benName", "totalAmount", "sla", 'dateOpened', 'currentStatus']}
           noDataMessage={"No Cases to Display. Try Refreshing the page or click Add New above."}
           onRowClick={this.rowClick}
           enableInfiniteScroll={true}
           bodyHeight={500}
           filterPlaceholderText={"Search"}
           columnMetadata={meta}
+          initialSort={"dateOpened"}
         />
         <Button>Show All Available Cases</Button>
 
@@ -123,7 +124,7 @@ var HomePage = React.createClass ({
         {/* This is the modal that is rendered when a row is click
          currentCaseData is passed as a property which the modal can render*/}
         <ViewCaseModal  case={this.state.caseData} ref={'viewCaseModal'} />
-        <CaseModal case={this.state.currentCaseData} ref={'govRecCaseModal'} />
+        <AddNewCaseModal refreshCases={this.refreshCases} ref={'govRecCaseModal'} />
         <ViewTreasuryModal  case={this.state.caseData} ref={'viewTreasuryModal'} />
         <TreasuryModal case={this.state.currentCaseData} ref={'tresModal'} />
       </div>
@@ -141,6 +142,13 @@ var meta = [
     "displayName": "Case ID"
   },
   {
+    "columnName": "id",
+    "order": 1,
+    "locked": false,
+    "visible": false,
+    "displayName": "ID"
+  },
+  {
     "columnName": "benName",
     "order": 2,
     "locked": false,
@@ -155,7 +163,7 @@ var meta = [
     "displayName": "Total Amount"
   },
   {
-    "columnName": "SLA",
+    "columnName": "sla",
     "order": 4,
     "locked": false,
     "visible": true,

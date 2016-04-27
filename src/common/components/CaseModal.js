@@ -25,7 +25,7 @@ var CaseModal = React.createClass({
 
         <Modal show={this.state.showModal} onHide={this.close}> <Accordion>
           <Panel header={<Modal.Header closeButton><Modal.Title>Case Creation: <b>Government Reclamation</b> </Modal.Title> </Modal.Header>}eventKey="1">
-            <Modal.Body ><GovRecType1Form closeModal={this.close} /></Modal.Body>
+            <Modal.Body ><GovRecType1Form refreshCases={this.props.refreshCases} closeModal={this.close} /></Modal.Body>
             <Modal.Footer><Button onClick={this.close}>Close</Button></Modal.Footer>
           </Panel>
         </Accordion>

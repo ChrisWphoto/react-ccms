@@ -9,7 +9,7 @@ const Form = t.form.Form;
 
 //defining enum for person form
 const govRecSubType = t.enums({
-  govrec: 'Government Reclamation',
+  govrec: "Gov Reclamation",
   crf: 'CRF',
   dcn: 'DCN',
   dne: 'DNE'
@@ -21,7 +21,21 @@ const payment = t.struct({
 });
 
 var options = {
-  auto: 'placeholders'
+  auto: 'placeholders',
+  fields: {
+    dateOfDeath: {
+      label: <span style={{color: 'grey'}}> Date of Death (Required) </span>
+    },
+    dateLearnedOfDeath: {
+      label: <span style={{color: 'grey'}}> Date Learned of Death (Required) </span>
+    },
+    payments: {
+      label: <span style={{color: 'grey'}}> Add Payments  </span>
+    },
+    selectCaseSubtype: {
+      label: <span style={{color: 'grey'}}> Choose Case Sub Type  </span>
+    }
+  }
 };
 
 // define your domain model with tcomb
@@ -32,7 +46,7 @@ const GovRecCaseCreationForm = t.struct({
   beneficiarySSN: t.Number,
   beneficiaryAccountNumber: t.maybe(t.Number),
   beneficiaryCustomerID: t.maybe(t.Number),
-  dateOfDeath: t.maybe(t.Date),
+  dateOfDeath: t.Date,
   dateLearnedOfDeath: t.maybe(t.Date),
   otherGovernmentBenefits: t.maybe(t.String),
   payments: t.list(payment),
@@ -59,7 +73,7 @@ var Tform = React.createClass({
       governmentReclamation: {
         dateCreated: form.dateOfDeath.toISOString(),
         mainType: "Government Reclamation",
-        subType: "Gov Reclamation", //form.selectCaseSubtype,
+        subType:  "Gov Reclamation",
         benName: form.beneficiaryName,
         currentStatus: "Open"
       },
@@ -75,14 +89,13 @@ var Tform = React.createClass({
   save2() {
     // call getValue() to get the values of the form
     var value = this.refs.form.getValue();
-
     // if validation fails, value will be null
     if (value){
       console.log(value);
       console.log( this.parseCaseOj(value) );
       restCalls.createCase(this.parseCaseOj(value)).then((val) => this.props.closeModal())
-
-
+      //refresh casses on Dashboard
+      window.setTimeout( () => this.props.refreshCases(), 550 );
     }
     else console.log("Form is invalid or an error occured: form value is", value);
   },
