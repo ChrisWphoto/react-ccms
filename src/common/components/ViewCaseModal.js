@@ -46,7 +46,11 @@ var ViewCaseModal = React.createClass({
 
 
   close() {
-    this.setState({ showModal: false, assignedName: false });
+    this.setState({
+      showModal: false,
+      assignedName: false,
+      openAssignUser: false
+    });
   },
 
   onShow() {
