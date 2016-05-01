@@ -15,6 +15,13 @@ const govRecSubType = t.enums({
   dne: 'DNE'
 });
 
+const method = t.enums({
+  ach: "ACH Return",
+  chk: 'Cashier Check Mailed',
+  mix: 'Mixed Method',
+
+});
+
 const payment = t.struct({
   amount: t.Number,
   date: t.Date
@@ -38,6 +45,7 @@ var options = {
   }
 };
 
+
 // define your domain model with tcomb
 // https://github.com/gcanti/tcomb
 const GovRecCaseCreationForm = t.struct({
@@ -50,8 +58,10 @@ const GovRecCaseCreationForm = t.struct({
   dateLearnedOfDeath: t.maybe(t.Date),
   otherGovernmentBenefits: t.maybe(t.String),
   payments: t.list(payment),
-  claimNumber: t.maybe(t.Number)
+  claimNumber: t.maybe(t.Number),
 });
+
+
 
 
 var Tform = React.createClass({
@@ -94,7 +104,7 @@ var Tform = React.createClass({
       console.log(value);
       console.log( this.parseCaseOj(value) );
       restCalls.createCase(this.parseCaseOj(value)).then((val) => this.props.closeModal())
-      //refresh casses on Dashboard
+      //refresh cases on Dashboard
       window.setTimeout( () => this.props.refreshCases(), 550 );
     }
     else console.log("Form is invalid or an error occured: form value is", value);

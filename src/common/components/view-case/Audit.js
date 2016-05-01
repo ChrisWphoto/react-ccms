@@ -3,7 +3,7 @@ import React from 'react';
 
 
 var ViewGovRec  = React.createClass({
-  
+
   render: function() {
     return (
         <div>

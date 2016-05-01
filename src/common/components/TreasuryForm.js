@@ -18,6 +18,12 @@ const Type = t.enums({
   A: 'Treasury Referral',
   B: 'Treasury Reclamation'});
 
+var options2=
+{
+  auto:'placeholders'
+
+};
+
 var Recover = t.enums.of('Commerce_Bank Customer_DDA Other');
 var options = {
   fields: {
@@ -117,7 +123,9 @@ var Yform = React.createClass({
       <div>
         <Form
           ref="form"
+          options={options2}
           type={Treasury}
+
         />
         <Button onClick={this.save2}>Save Case</Button>
 
