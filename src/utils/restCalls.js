@@ -23,9 +23,18 @@ var restCalls = {
     })
   },
 
-  createCase: function(caseJSON){
+
+
+createCase: function(caseJSON){
     let creatCaseURI = 'http://testccmsrestapi.herokuapp.com/createcase';
     return axios.post( creatCaseURI, caseJSON ).then(caseResponse => {
+      console.log(caseResponse);
+    })
+  },
+
+  updateCase: function(caseJSON){
+    let updateCaseURI = 'http://testccmsrestapi.herokuapp.com/updatecase ';
+    return axios.post( updateCaseURI, caseJSON ).then(caseResponse => {
       console.log(caseResponse);
     })
   },
