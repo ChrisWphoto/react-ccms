@@ -68,9 +68,6 @@ var Tform = React.createClass({
 
   //this is where the data captured in the form is prepared for the backend
   parseCaseOj(form){
-
-
-
     return {
       userId: 1,
       governmentReclamation: {
@@ -79,7 +76,7 @@ var Tform = React.createClass({
         completedDate: form.dateComplete.toISOString(),
         dateVerified: form.VerifiedDate.toISOString(),
       }
-      }
+    }
   },
 
   closeStuff() {

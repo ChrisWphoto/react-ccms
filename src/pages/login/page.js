@@ -22,7 +22,7 @@ var LoginPage = React.createClass( {
         {/* Login is the login commponet declared above*/}
         <Login />
 
-        <p className={styles.lead}>Don't have an account? </p>
+        <p className={styles.lead}>Need an account? </p>
         <button type="button" onClick={this.signUp}>Sign up</button>
       </div>
     );

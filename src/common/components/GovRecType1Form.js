@@ -68,7 +68,6 @@ var Tform = React.createClass({
 
   //this is where the data captured in the form is prepared for the backend
   parseCaseOj(form){
-
     //Convery Dates for Payments
     let payments = [];
     form.payments.forEach( pay => {

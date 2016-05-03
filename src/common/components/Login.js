@@ -6,7 +6,7 @@ import styles from '../../pages/login/style.css';
 var Login  = React.createClass({
   getInitialState: function(){
     return{
-      user:'chris'
+      userId: 8 //default to joel's id
     }
   },
 
