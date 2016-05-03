@@ -22,6 +22,7 @@ var AssignUser  = React.createClass({
     }.bind(this));
   },
 
+
   assign: function(user) {
     this.setState({assigningUser: "Saving user to DB..."});
     Axios.get("http://testccmsrestapi.herokuapp.com/assigncase", {
@@ -40,7 +41,7 @@ var AssignUser  = React.createClass({
 
   render: function() {
     return (
-        <div>
+        <div style={{padding:10, marginBottom: 15}}>
             { this.props.active ? <div>
               <h3> Choose an Assignee </h3> <span> {this.state.assigningUser} </span>
               <ListGroup> {this.state.allUsers} </ListGroup> </div> : null}

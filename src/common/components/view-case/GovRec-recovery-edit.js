@@ -5,11 +5,26 @@ import DatePicker from 'react-bootstrap-date-picker';
 const Form = t.form.Form;
 console.log(t.form.Form.templates);
 
-const testForm = t.struct({
-  amountPaid: t.maybe(t.Number),  
+const payment = t.struct({
+  amount: t.Number,
+  date: t.Date
+});
+
+const method = t.enums({
+  ach: "ACH Return",
+  chk: 'Cashier Check Mailed',
+  mix: 'Mixed Method',
+});
+
+
+const editRecoverForm = t.struct({
+  method: method,
+  payments: t.list(payment),
   fullRecovery: t.maybe(t.Boolean),
   completedDate:t.maybe(t.Date),
-  notes:t.maybe(t.String)
+  notes:t.maybe(t.String),
+  verifiedBy:t.String,
+  verifiedDate:t.Date
 });
 
 
@@ -17,60 +32,64 @@ const testForm = t.struct({
 //options for form
 const options = {
   fields: {
-    notes: {
-      
+    payments: {
+      label: <span style={{color: 'grey'}}> Edit Recorded Payment(s)   </span>
+    },
+    method: {
+      label: "Recovery Method"
+    },
+    fullRecovery: {
+      label: <span style={{fontSize: 18}}> Full Recovery Completed   </span>
     }
   }
 }
 
 
 var EditGovRec  = React.createClass({
-    
+
     getInitialState: function(){
         return {
             formValue: {
                 amountPaid: '$0',
                 fullRecovery: 'false',
                 notes: 'default note',
-                completedDate: "01/01/1111"
-            }     
+                completedDate: "01/01/1111",
+                payments: [{caseId:"defaultVal"}],
+                verifiedBy: "Type a user's name"
+            }
         }
     },
-  
+
   componentWillReceiveProps: function(nextProps) {
   this.setState({
     formValue: {
         amountPaid: nextProps.theCase.totalAmount,
         fullRecovery: nextProps.theCase.fullRecovery,
         notes: nextProps.theCase.additionalNotes || "No Notes Added Yet",
-        completedDate: nextProps.theCase.dateCreated        
-    } 
-    
+        completedDate: nextProps.theCase.dateCreated,
+        payments: nextProps.payments,
+        verifiedDate: nextProps.theCase.dateVerified
+    }
+
   });
-},  
-    
-  
+},
+
   render: function() {
     return (
-        <div>
-        <h2>Edit Recovery Details</h2>
-        <div>
-          <Form ref="govRecEdit"
-          type={testForm}
-          value={this.state.formValue}
-          options={options}
-        />
-            
-
-           
-        </div>
+        <div style={{border:"2px dashed", padding: 10}}>
+          <h2>Recovery Details <span style={{color:"#F97F85"}}> Edit Mode </span></h2>
+          <div style={{marginTop: 25}}>
+            <Form ref="govRecEdit"
+            type={editRecoverForm}
+            value={this.state.formValue}
+            options={options}
+            />
+          </div>
         </div>
     );
   }
 
 });
-
-
 
 /*
 

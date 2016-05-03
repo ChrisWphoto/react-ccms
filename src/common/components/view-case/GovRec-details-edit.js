@@ -6,7 +6,7 @@ const Form = t.form.Form;
 console.log(t.form.Form.templates);
 
 const testForm = t.struct({
-  amountPaid: t.maybe(t.Number),  
+  amountPaid: t.maybe(t.Number),
   fullRecovery: t.maybe(t.Boolean),
   completedDate:t.maybe(t.Date),
   notes:t.maybe(t.String)
@@ -18,14 +18,14 @@ const testForm = t.struct({
 const options = {
   fields: {
     notes: {
-      
+
     }
   }
 }
 
 
 var EditGovRec  = React.createClass({
-    
+
     getInitialState: function(){
         return {
             formValue: {
@@ -33,37 +33,34 @@ var EditGovRec  = React.createClass({
                 fullRecovery: 'false',
                 notes: 'default note',
                 completedDate: "01/01/1111"
-            }     
+            }
         }
     },
-  
+
   componentWillReceiveProps: function(nextProps) {
   this.setState({
     formValue: {
         amountPaid: nextProps.theCase.totalAmount,
         fullRecovery: nextProps.theCase.fullRecovery,
         notes: nextProps.theCase.additionalNotes || "No Notes Added Yet",
-        completedDate: nextProps.theCase.dateCreated        
-    } 
-    
+        completedDate: nextProps.theCase.dateCreated
+    }
+
   });
-},  
-    
-  
+},
+
+
   render: function() {
     return (
-        <div>
-        <h2>Edit Case Details</h2>
-        <div>
-          <Form ref="govRecEdit"
-          type={testForm}
-          value={this.state.formValue}
-          options={options}
-        />
-            
-
-           
-        </div>
+        <div style={{border:"2px dashed", padding: 10}}>
+          <h2>Edit Case Details</h2>
+          <div>
+            <Form ref="govRecEdit"
+            type={testForm}
+            value={this.state.formValue}
+            options={options}
+            />   
+          </div>
         </div>
     );
   }

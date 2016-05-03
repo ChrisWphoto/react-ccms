@@ -44,12 +44,23 @@ var ViewCaseModal = React.createClass({
     }
   },
 
+  getPaymentsById(caseId){
+    Axios.get("http://testccmsrestapi.herokuapp.com/findpaymentsbyid?caseId=" + caseId)
+      .then( ({data}) => {
+        console.log("getPaymentsById:", data);
+        //save payment array to payments in state
+        this.setState({payments: data});
+      });
+  },
+
 
   close() {
     this.setState({
       showModal: false,
       assignedName: false,
-      openAssignUser: false
+      openAssignUser: false,
+      edit: false,
+      editGRDetails: false
     });
   },
 
@@ -65,10 +76,12 @@ var ViewCaseModal = React.createClass({
 
   toggleEdit(){
         this.setState({edit: !this.state.edit});
+        this.getPaymentsById(this.props.case.caseId);
   },
 
   toggleEditGRDetails(){
         this.setState({editGRDetails: !this.state.editGRDetails});
+
   },
 
   openAssignUser(){
@@ -98,11 +111,11 @@ var ViewCaseModal = React.createClass({
           </Modal.Header>
            <Modal.Body>
              <AssignUser updateAssignedUser={this.getUserName} caseId={theCase.caseId} active={this.state.openAssignUser} />
-            {theCase.currentStatus != "closed" ? <Button onClick={this.toggleEdit} style={{float: 'right'}} >Edit</Button> : null }
+            {theCase.currentStatus != "closed" ? <Button onClick={this.toggleEdit} style={{float: 'right'}}>{this.state.edit ? "Save Edits":"Edit"}</Button> : null }
                 {/*Show ViewGovRec when edit is false */}
-            {this.state.edit ? <EditGovRec theCase={this.props.case} /> : <GovRecRecovery theCase={this.props.case} />}
+            {this.state.edit ? <EditGovRec payments={this.state.payments} theCase={this.props.case} /> : <GovRecRecovery theCase={this.props.case} />}
             <hr/>
-            {theCase.currentStatus != "closed" ? <Button onClick={this.toggleEditGRDetails} style={{float: 'right'}} >Edit</Button> : null }
+            {theCase.currentStatus != "closed" ? <Button onClick={this.toggleEditGRDetails} style={{float: 'right'}} >{this.state.editGRDetails ? "Save Edits":"Edit"}</Button> : null }
             {this.state.editGRDetails ? <EditGovRecDetails theCase={this.props.case} /> : <GovRecDetails newAssignedUser={this.state.assignedName} theCase={this.props.case} />}
           </Modal.Body>
           <Modal.Footer>

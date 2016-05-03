@@ -13,7 +13,6 @@ const method = t.enums({
   ach: "ACH Return",
   chk: 'Cashier Check Mailed',
   mix: 'Mixed Method',
-
 });
 
 
