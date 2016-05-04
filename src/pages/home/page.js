@@ -70,7 +70,7 @@ var HomePage = React.createClass ({
 
           //allCases = [ {assignedto:1}, {assignedto:2} ]
           var myCasesMutated = allCases.filter(function(aCase){
-            return aCase.assignedto == "1";
+            return aCase.userIdAssigned == "8";
           });
           if (myCasesMutated.length > 0)
             myCasesMutated.map( theCase => this.calcDayDelta(theCase) );
@@ -160,7 +160,7 @@ var HomePage = React.createClass ({
 
         {/* This is the modal that is rendered when a row is click
          currentCaseData is passed as a property which the modal can render*/}
-        <ViewCaseModal  case={this.state.caseData} ref={'viewCaseModal'} />
+        <ViewCaseModal  refreshCases={this.allCases} case={this.state.caseData} ref={'viewCaseModal'} />
         <AddNewCaseModal refreshCases={this.allCases} ref={'govRecCaseModal'} />
         <ViewTreasuryModal  case={this.state.caseData} ref={'viewTreasuryModal'} />
         <TreasuryModal refreshCases={this.allCases} ref={'tresModal'} />

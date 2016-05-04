@@ -12,8 +12,9 @@ import Axios from 'axios';
 var ViewCaseModal = React.createClass({
 
   getInitialState() {
-    return { showModal: false,
-         theCase: {},
+    return {
+         showModal: false,
+         theCase: this.props.case || {},
          edit: false,
          editGRDetails: false,
          openAssignUser: false,
@@ -27,7 +28,7 @@ var ViewCaseModal = React.createClass({
     }else {
 
       //timeout so props can catch up
-      window.setTimeout(() =>{
+      window.setTimeout(() => {
         let usrId = this.props.case.userIdAssigned || "";
         console.log("Assigned UID", usrId);
         if (usrId){
@@ -45,6 +46,7 @@ var ViewCaseModal = React.createClass({
   },
 
   getPaymentsById(caseId){
+    console.log("Finding payments:", caseId);
     Axios.get("http://testccmsrestapi.herokuapp.com/findpaymentsbyid?caseId=" + caseId)
       .then( ({data}) => {
         console.log("getPaymentsById:", data);
@@ -53,6 +55,20 @@ var ViewCaseModal = React.createClass({
       });
   },
 
+  componentWillReceiveProps(nextProps){
+    this.setState({theCase: nextProps.case || {} });
+  },
+
+  refreshCaseData(caseId){
+    console.log("refreshCaseData of", caseId);
+    this.getPaymentsById(caseId);
+    Axios.get("http://testccmsrestapi.herokuapp.com/findcasebyid?caseId=" + caseId)
+      .then( ({data}) => {
+        console.log("getCaseById:", data);
+        //save payment array to payments in state
+        this.setState({theCase: data});
+      });
+  },
 
   close() {
     this.setState({
@@ -62,6 +78,8 @@ var ViewCaseModal = React.createClass({
       edit: false,
       editGRDetails: false
     });
+    //refresh cases on Dashboard
+    window.setTimeout( () => this.props.refreshCases(), 10 );
   },
 
   onShow() {
@@ -89,7 +107,6 @@ var ViewCaseModal = React.createClass({
   },
 
   render() {
-    var theCase = this.props.case || {};
     var noRecoveryMsg = "Not Completed";
     return (
       <div>
@@ -100,22 +117,22 @@ var ViewCaseModal = React.createClass({
             <Modal.Title>
               <div style={{float:'right', marginRight: 30}}>
                 <Button onClick={this.openAssignUser}>{this.state.openAssignUser ? "Finished":"Assign Case"}  </Button>
-                {theCase.currentStatus != "closed" ? <Button>Close</Button> : <Button>Open</Button> }
+                {this.state.theCase.currentStatus != "closed" ? <Button>Close</Button> : <Button>Open</Button> }
                 <Button >Watch</Button>
               </div>
-              <b>{theCase.mainType}</b> <br/>For: <b>{theCase.benName}</b>
+              <b>{this.state.theCase.mainType}</b> <br/>For: <b>{this.state.theCase.benName}</b>
               <br/>
-              Case: <b>{theCase.currentStatus}</b>
+              Case: <b>{this.state.theCase.currentStatus}</b>
               <br/><br/>
             </Modal.Title>
           </Modal.Header>
            <Modal.Body>
-             <AssignUser updateAssignedUser={this.getUserName} caseId={theCase.caseId} active={this.state.openAssignUser} />
-            {theCase.currentStatus != "closed" ? <Button onClick={this.toggleEdit} style={{float: 'right'}}>{this.state.edit ? "Save Edits":"Edit"}</Button> : null }
+             <AssignUser updateAssignedUser={this.getUserName} caseId={this.state.theCase.caseId} active={this.state.openAssignUser} />
+            {this.state.theCase.currentStatus != "closed" ? <Button onClick={this.toggleEdit} style={{float: 'right'}}>{this.state.edit ? "Save Edits":"Edit"}</Button> : null }
                 {/*Show ViewGovRec when edit is false */}
-            {this.state.edit ? <EditGovRec payments={this.state.payments} theCase={this.props.case} /> : <GovRecRecovery theCase={this.props.case} />}
+            {this.state.edit ? <EditGovRec toggleEdit={this.toggleEdit} refreshCaseData={this.refreshCaseData} payments={this.state.payments} theCase={this.state.theCase} /> : <GovRecRecovery theCase={this.state.theCase} />}
             <hr/>
-            {theCase.currentStatus != "closed" ? <Button onClick={this.toggleEditGRDetails} style={{float: 'right'}} >{this.state.editGRDetails ? "Save Edits":"Edit"}</Button> : null }
+            {this.state.theCase.currentStatus != "closed" ? <Button onClick={this.toggleEditGRDetails} style={{float: 'right'}} >{this.state.editGRDetails ? "Save Edits":"Edit"}</Button> : null }
             {this.state.editGRDetails ? <EditGovRecDetails theCase={this.props.case} /> : <GovRecDetails newAssignedUser={this.state.assignedName} theCase={this.props.case} />}
           </Modal.Body>
           <Modal.Footer>

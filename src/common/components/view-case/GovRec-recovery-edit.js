@@ -14,14 +14,14 @@ const payment = t.struct({
 });
 
 const method = t.enums({
-  ach: "ACH Return",
-  chk: 'Cashier Check Mailed',
-  mix: 'Mixed Method',
+  ACH: "ACH Return",
+  CashiersCheck: 'Cashier Check Mailed',
+  Mixed: 'Mixed Method',
 });
 
 
 const editRecoverForm = t.struct({
-  method: method,
+  method: t.maybe(method),
   payments: t.list(payment),
   fullRecovery: t.maybe(t.Boolean),
   completedDate:t.maybe(t.Date),
@@ -81,24 +81,31 @@ var EditGovRec  = React.createClass({
 //this is where the data captured in the form is prepared for the backend
 parseCaseOj(form){
   //Convery Dates for Payments
-  let payments = [];
-  form.payments.forEach( pay => {
-    payments.push({
+  let prepPayments = [];
+  form.payments.forEach( (pay, idx) => {
+    console.log("this.props.payments[idx].id:", this.props.payments[idx].id);
+    prepPayments.push({
       date: pay.date.toISOString(),
-      amount: pay.amount
+      amount: pay.amount,
+      id: this.props.payments[idx].id,
+      caseId: this.props.theCase.caseId
     });
   });
 
+
+  let aCase = this.props.theCase;
+  aCase.recoveryMethod = form.method;
+  aCase.fullRecovery = form.fullRecovery;
+  aCase.completedDate = form.completedDate.toISOString();
+  aCase.dateVerified = form.verifiedDate.toISOString();
+  aCase.userIdVerified = this.state.userInfo.userId;
+  aCase.additionalNotes = form.notes;
   return {
     userId: this.state.userInfo.userId,
     governmentReclamation: {
-      recoveryMethod: form.method,
-      fullRecovery: form.fullRecovery,
-      completedDate: form.completedDate.toISOString(),
-      dateVerified: form.verifiedDate.toISOString(),
-      userIdVerified: this.state.userInfo.userId
+      ...aCase
     },
-    paymentsToModify: payments
+    paymentsToModify: prepPayments
   }
 },
 
@@ -109,9 +116,11 @@ saveEditForm() {
   if (value){
     console.log(value);
     console.log( this.parseCaseOj(value) );
-    restCalls.updateCase(this.parseCaseOj(value)).then((val) => {console.log(val); this.props.closeModal()})
-    //refresh cases on Dashboard
-    window.setTimeout( () => this.props.refreshCases(), 550 );
+    restCalls.updateCase(this.parseCaseOj(value)).then((val) => {
+      console.log("updateCase", val);
+      this.props.refreshCaseData(this.props.theCase.caseId);
+      this.props.toggleEdit();
+    });
   }
   else console.log("Form is invalid or an error occured: form value is", value);
 },
