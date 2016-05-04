@@ -128,11 +128,11 @@ var ViewCaseModal = React.createClass({
           </Modal.Header>
            <Modal.Body>
              <AssignUser updateAssignedUser={this.getUserName} caseId={this.state.theCase.caseId} active={this.state.openAssignUser} />
-            {this.state.theCase.currentStatus != "closed" ? <Button onClick={this.toggleEdit} style={{float: 'right'}}>{this.state.edit ? "Save Edits":"Edit"}</Button> : null }
+            {this.state.theCase.currentStatus != "closed" ? <Button onClick={this.toggleEdit} style={{float: 'right'}}>{this.state.edit ? "Close Edits":"Edit"}</Button> : null }
                 {/*Show ViewGovRec when edit is false */}
             {this.state.edit ? <EditGovRec toggleEdit={this.toggleEdit} refreshCaseData={this.refreshCaseData} payments={this.state.payments} theCase={this.state.theCase} /> : <GovRecRecovery theCase={this.state.theCase} />}
             <hr/>
-            {this.state.theCase.currentStatus != "closed" ? <Button onClick={this.toggleEditGRDetails} style={{float: 'right'}} >{this.state.editGRDetails ? "Save Edits":"Edit"}</Button> : null }
+            {this.state.theCase.currentStatus != "closed" ? <Button onClick={this.toggleEditGRDetails} style={{float: 'right'}} >{this.state.editGRDetails ? "Close Edits":"Edit"}</Button> : null }
             {this.state.editGRDetails ? <EditGovRecDetails theCase={this.props.case} /> : <GovRecDetails newAssignedUser={this.state.assignedName} theCase={this.props.case} />}
           </Modal.Body>
           <Modal.Footer>

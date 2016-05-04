@@ -21,11 +21,11 @@ const method = t.enums({
 
 
 const editRecoverForm = t.struct({
-  method: t.maybe(method),
+  method: method,
   payments: t.list(payment),
-  fullRecovery: t.maybe(t.Boolean),
-  completedDate:t.maybe(t.Date),
-  notes:t.maybe(t.String),
+  fullRecovery: t.Boolean,
+  completedDate:t.Date,
+  notes:t.String,
   verifiedBy:t.String,
   verifiedDate:t.Date
 });
