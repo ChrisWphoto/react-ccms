@@ -46,8 +46,6 @@ var HomePage = React.createClass ({
   },
 
   allCases: function(){
-    //set cases to empty object
-    this.setState({ cases: {} })
     //request all the cases from DB
     restCalls.getDashboardInfo()
       //after those cases come back pass to allCases
