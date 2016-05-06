@@ -101,6 +101,7 @@ var HomePage = React.createClass ({
     return Object.keys(theCase).map( (theKey, idx) => <h3 key={idx} > {theCase[theKey]} </h3>);
   },
 
+
 // open modal to view all case details
   rowClick: function (rowCaseData) {
     //setting state allows us to update data in viewCaseModal
@@ -111,7 +112,6 @@ var HomePage = React.createClass ({
   render() {
     return (
       <div className={styles.content}>
-
         <Navbar>
           <Navbar.Header>
             <Navbar.Brand>
@@ -138,7 +138,7 @@ var HomePage = React.createClass ({
 
         <NachaDrop className={styles.dropbox} refreshCases={this.allCases} />
         <br/>
-        <h1 > Cases for {this.state.userInfo.firstName} {this.state.userInfo.LastName}</h1>
+        <h1 className={styles.welcomeText} > Cases for {this.state.userInfo.firstName} {this.state.userInfo.LastName} </h1>
         <br/>
 
       <Griddle
